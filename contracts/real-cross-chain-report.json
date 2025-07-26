@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-07-26T09:39:37.672Z",
+  "networks": {
+    "yields": {
+      "ethereum": {
+        "stETH": 3.2,
+        "rETH": 3.1,
+        "cbETH": 2.9
+      },
+      "etherlink": {
+        "liquidStaking": 4.1,
+        "defi": 5.2
+      }
+    },
+    "prices": {
+      "ethPrice": 3755.843252939782,
+      "ethAmount": 0.2662517929142218,
+      "source": "1inch API"
+    },
+    "sepolia": {
+      "connected": true,
+      "latestBlock": 8845654,
+      "blockTime": 1753522764,
+      "chainId": 11155111
+    },
+    "etherlink": {
+      "connected": true,
+      "latestBlock": 20745324,
+      "blockTime": 1753522771,
+      "chainId": 128123
+    }
+  },
+  "realDataSources": [
+    "1inch API for price quotes",
+    "Sepolia testnet for Ethereum data",
+    "Etherlink testnet for L2 data",
+    "Live yield APIs (simulated structure)"
+  ],
+  "arbitrageOpportunity": true,
+  "verifiable": true,
+  "blockExplorers": {
+    "sepolia": "https://sepolia.etherscan.io",
+    "etherlink": "https://explorer.etherlink.com"
+  }
+}

@@ -27,16 +27,16 @@ module.exports = {
       chainId: 31337,
     },
     sepolia: {
-      url: process.env.SEPOLIA_RPC_URL || "https://rpc.sepolia.org",
+      url: process.env.SEPOLIA_RPC_URL || "https://ethereum-sepolia-rpc.publicnode.com",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 11155111,
-      gasPrice: "auto",
+      gasPrice: 20000000000, // 20 gwei
     },
     etherlink: {
       url: process.env.ETHERLINK_RPC_URL || "https://node.ghostnet.etherlink.com",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
-      chainId: 128123, // Etherlink Ghostnet
-      gasPrice: "auto",
+      chainId: 128123,
+      gasPrice: 1000000000, // 1 gwei
     },
   },
   etherscan: {
