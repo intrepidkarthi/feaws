@@ -351,7 +351,4 @@ contract LimitOrderManager is Ownable {
         // For demo, we just emit an event to show integration
         emit OneInchOrderSubmitted(orderData, signature, block.timestamp);
     }
-    
-    // Demo event to show 1inch integration
-    event OneInchOrderSubmitted(bytes orderData, bytes signature, uint256 timestamp);
 }

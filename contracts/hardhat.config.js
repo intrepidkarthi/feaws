@@ -17,10 +17,10 @@ module.exports = {
   networks: {
     hardhat: {
       chainId: 31337,
-      forking: {
+      forking: process.env.FORK_MAINNET === 'true' ? {
         url: process.env.MAINNET_RPC_URL || "https://eth-mainnet.g.alchemy.com/v2/demo",
         blockNumber: 18500000, // Pin to specific block for consistency
-      },
+      } : undefined,
     },
     localhost: {
       url: "http://127.0.0.1:8545",
