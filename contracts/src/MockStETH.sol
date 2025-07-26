@@ -88,6 +88,12 @@ contract MockStETH is ERC20, Ownable {
      */
     function simulateRebase() external onlyOwner {
         // Simulate 0.1% daily yield (3.65% APY)
-        accrueYield(10); // 0.1% = 10 basis points
+        uint256 currentSupply = totalSupply();
+        uint256 yieldAmount = (currentSupply * 10) / 10000; // 0.1% = 10 basis points
+        
+        if (yieldAmount > 0) {
+            _mint(owner(), yieldAmount);
+            emit YieldAccrued(currentSupply, yieldAmount);
+        }
     }
 }
