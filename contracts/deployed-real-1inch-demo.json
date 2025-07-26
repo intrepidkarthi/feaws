@@ -7,7 +7,7 @@
   "limitOrderManager": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
   "oneInchProtocol": "0x1111111254EEB25477B68fb85Ed929f73A960582",
   "isRealIntegration": false,
-  "integrationStatus": "Simulated 1inch Integration for Demo",
+  "integrationStatus": "0x1111111254EEB25477B68fb85Ed929f73A960582",
   "demoOrderCreated": true,
-  "deployedAt": "2025-07-26T09:22:40.017Z"
+  "deployedAt": "2025-07-26T19:06:11.079Z"
 }

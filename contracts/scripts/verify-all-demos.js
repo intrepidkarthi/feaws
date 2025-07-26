@@ -43,16 +43,21 @@ async function main() {
     console.log("Testing all enhancement demo scripts...\n");
     
     const demos = [
-        { name: 'demo-working-enhancements.js', timeout: 20000 },
-        { name: 'demo-realtime-yields.js', timeout: 25000 },
-        { name: 'demo-advanced-arbitrage.js', timeout: 25000 }
+        'demo-working-enhancements.js',
+        'demo-realtime-yields.js',
+        'demo-advanced-arbitrage.js',
+        'demo-complete-enhancements.js',
+        'demo-real-1inch.js',
+        'demo-real-cross-chain-yields.js',
+        'demo-strategy-execution.js',
+        'demo-htlc-bridge.js'
     ];
     
     const results = [];
     
     for (const demo of demos) {
-        const success = await runDemo(demo.name, demo.timeout);
-        results.push({ name: demo.name, success });
+        const success = await runDemo(demo, 25000);
+        results.push({ name: demo, success });
     }
     
     console.log("\n📊 VERIFICATION RESULTS");

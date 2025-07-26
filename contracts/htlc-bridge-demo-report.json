@@ -1,0 +1,49 @@
+{
+  "timestamp": "2025-07-26T18:56:45.554Z",
+  "demo": "HTLC Bridge Atomic Cross-Chain Swap",
+  "participants": {
+    "alice": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+    "bob": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC"
+  },
+  "contracts": {
+    "htlcChainA": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+    "htlcChainB": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+    "usdc": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "steth": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+  },
+  "swaps": {
+    "chainA": {
+      "swapId": "0x6aed0aa096f635c15b5e6519a44298050f2a447860a32a83fd4a7592b89cf051",
+      "state": "CLOSED",
+      "inputToken": "USDC",
+      "inputAmount": "1000.0",
+      "outputToken": "stETH",
+      "outputAmount": "1020.0"
+    },
+    "chainB": {
+      "swapId": "0x8c76ec81cef4d4ccc6bc99d5b264191c75fe358a6fb4f9295bbb157015d027dc",
+      "state": "CLOSED",
+      "inputToken": "stETH",
+      "inputAmount": "1020.0",
+      "outputToken": "USDC",
+      "outputAmount": "1000.0"
+    }
+  },
+  "results": {
+    "atomicSwapCompleted": true,
+    "secretRevealed": true,
+    "arbitrageProfit": "1019.999999999",
+    "profitPercentage": "101999999999900.00%"
+  },
+  "securityFeatures": [
+    "Hash-lock cryptographic security",
+    "Time-lock refund protection",
+    "Atomic execution guarantee",
+    "Trustless cross-chain coordination",
+    "No counterparty risk"
+  ],
+  "prizeRelevance": {
+    "1inch Protocol Prize": "Demonstrates secure cross-chain execution for 1inch orders",
+    "Etherlink Prize": "Shows advanced cross-chain functionality between Sepolia and Etherlink"
+  }
+}

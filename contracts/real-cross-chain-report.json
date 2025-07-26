@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-07-26T09:39:37.672Z",
+  "timestamp": "2025-07-26T19:06:15.028Z",
   "networks": {
     "yields": {
       "ethereum": {
@@ -13,20 +13,20 @@
       }
     },
     "prices": {
-      "ethPrice": 3755.843252939782,
-      "ethAmount": 0.2662517929142218,
+      "ethPrice": 3745.2464855701182,
+      "ethAmount": 0.26700512338850124,
       "source": "1inch API"
     },
     "sepolia": {
       "connected": true,
-      "latestBlock": 8845654,
-      "blockTime": 1753522764,
+      "latestBlock": 8848485,
+      "blockTime": 1753556772,
       "chainId": 11155111
     },
     "etherlink": {
       "connected": true,
-      "latestBlock": 20745324,
-      "blockTime": 1753522771,
+      "latestBlock": 20752229,
+      "blockTime": 1753556773,
       "chainId": 128123
     }
   },

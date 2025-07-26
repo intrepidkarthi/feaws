@@ -31,6 +31,7 @@ async function main() {
   const limitOrderManager = await ethers.getContractAt("LimitOrderManager", deploymentData.contracts.limitOrderManager);
   const yieldGatedTWAP = await ethers.getContractAt("YieldGatedTWAP", deploymentData.contracts.yieldGatedTWAP);
   const mockUSDC = await ethers.getContractAt("MockUSDC", deploymentData.contracts.tokens.USDC);
+  const mockStETH = await ethers.getContractAt("MockStETH", deploymentData.contracts.tokens.stETH);
   
   console.log("✅ Connected to deployed contracts");
 
@@ -117,9 +118,23 @@ async function main() {
     console.log("⚖️  No significant arbitrage opportunities found");
   }
 
-  // Step 3: Check Strategy Status
-  console.log("\n📈 Step 3: Checking Strategy Status...");
-  console.log("======================================");
+  // Step 3: Create and Check Strategy Status
+  console.log("\n📈 Step 3: Creating TWAP Strategy...");
+  console.log("=====================================");
+  
+  // Create a TWAP strategy first
+  const createTx = await yieldGatedTWAP.createStrategy(
+    await mockUSDC.getAddress(),
+    await mockStETH.getAddress(),
+    ethers.parseUnits("1000", 6), // 1000 USDC total amount
+    ethers.parseUnits("100", 6),  // 100 USDC per tranche
+    3600, // 1 hour interval between tranches
+    500,  // 5% max slippage
+    200   // 2% minimum yield threshold
+  );
+  await createTx.wait();
+  
+  console.log("✅ TWAP Strategy created successfully");
   
   const strategyId = 1;
   const [config, state] = await yieldGatedTWAP.getStrategy(strategyId);

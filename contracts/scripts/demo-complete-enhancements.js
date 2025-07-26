@@ -149,8 +149,8 @@ async function main() {
                             tradeAmount
                         );
                         
-                        const netProfitUSD = Number(ethers.formatEther(opportunity.netProfit));
-                        const profitMargin = Number(opportunity.profitMargin) / 100;
+                        const netProfitUSD = opportunity.netProfit ? Number(ethers.formatEther(opportunity.netProfit)) : 0;
+                        const profitMargin = opportunity.profitMargin ? Number(opportunity.profitMargin) / 100 : 0;
                         
                         console.log(`   ${fromChain.name} → ${toChain.name}:`);
                         console.log(`     Yield Diff: +${(yieldDiff / 100).toFixed(2)}%`);
