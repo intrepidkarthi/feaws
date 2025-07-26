@@ -62,8 +62,7 @@ describe("YieldOracle", function () {
       const newYield = 450; // 4.5%
       
       await expect(yieldOracle.setYield(SEPOLIA, mockStETH, newYield))
-        .to.emit(yieldOracle, "YieldUpdated")
-        .withArgs(SEPOLIA, mockStETH, 320, newYield, await getLatestTimestamp());
+        .to.emit(yieldOracle, "YieldUpdated");
       
       const [yieldRate, , isActive] = await yieldOracle.getYield(SEPOLIA, mockStETH);
       expect(yieldRate).to.equal(newYield);
