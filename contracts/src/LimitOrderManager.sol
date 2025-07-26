@@ -34,6 +34,14 @@ contract LimitOrderManager is Ownable {
         bool isFilled;
     }
     
+    // Integration status
+    struct IntegrationStatus {
+        bool isRealIntegration;
+        address protocolAddress;
+        bool networkSupported;
+        uint256 lastOrderCount;
+    }
+    
     // Order storage
     mapping(bytes32 => OrderInfo) public orders;
     mapping(address => bytes32[]) public userOrders;
@@ -242,14 +250,38 @@ contract LimitOrderManager is Ownable {
     }
     
     /**
-     * @dev Get integration status
+     * @dev Get integration status information
+     * @return status Integration status struct
      */
-    function getIntegrationStatus() external view returns (bool isReal, string memory status) {
-        if (isMainnetFork) {
-            return (true, "Real 1inch Protocol Integration");
-        } else {
-            return (false, "Simulated 1inch Integration for Demo");
-        }
+    function getIntegrationStatus() external view returns (IntegrationStatus memory status) {
+        status = IntegrationStatus({
+            isRealIntegration: isMainnetFork,
+            protocolAddress: LIMIT_ORDER_PROTOCOL,
+            networkSupported: isMainnetFork,
+            lastOrderCount: allOrders.length
+        });
+    }
+    
+    /**
+     * @dev Notify external contract of order fill (for testing)
+     * @param target Target contract to notify
+     * @param orderHash Hash of filled order
+     * @param filledAmount Amount that was filled
+     */
+    function notifyOrderFilled(
+        address target,
+        bytes32 orderHash,
+        uint256 filledAmount
+    ) external {
+        // Call the target contract's onOrderFilled function
+        (bool success, ) = target.call(
+            abi.encodeWithSignature(
+                "onOrderFilled(bytes32,uint256)",
+                orderHash,
+                filledAmount
+            )
+        );
+        require(success, "Notification failed");
     }
     
     /**
