@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-07-26T18:56:45.554Z",
+  "timestamp": "2025-07-26T19:06:18.084Z",
   "demo": "HTLC Bridge Atomic Cross-Chain Swap",
   "participants": {
     "alice": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
@@ -13,7 +13,7 @@
   },
   "swaps": {
     "chainA": {
-      "swapId": "0x6aed0aa096f635c15b5e6519a44298050f2a447860a32a83fd4a7592b89cf051",
+      "swapId": "0x831c20312b5d09dd057d584992210933fc7d7d5be3105401130d66f60878b030",
       "state": "CLOSED",
       "inputToken": "USDC",
       "inputAmount": "1000.0",
@@ -21,7 +21,7 @@
       "outputAmount": "1020.0"
     },
     "chainB": {
-      "swapId": "0x8c76ec81cef4d4ccc6bc99d5b264191c75fe358a6fb4f9295bbb157015d027dc",
+      "swapId": "0xe3f1049aca1e0336fc779d50413909deebed15aa98f1d9eb1a5172328885f8ce",
       "state": "CLOSED",
       "inputToken": "stETH",
       "inputAmount": "1020.0",
