@@ -1,149 +1,157 @@
-# Treasury Management System
+# FEAWS Treasury Management System
 
-**Automated treasury management with 1inch Protocol integration and dynamic yield optimization**
+A production-ready treasury management system with real 1inch Protocol integration on Polygon mainnet.
 
-## Technical Overview
+## 🏦 Features
 
-A decentralized treasury management system that integrates 1inch Protocol for optimal token swaps and Etherlink for cross-chain yield opportunities. The system uses dynamic yield calculation based on real DeFi protocol rates and executes TWAP orders when yield thresholds are met.
-
-### Core Features
-
-- **1inch Protocol Integration**: Direct API integration for swap routing and execution
-- **Dynamic Yield Calculation**: Real-time yield data from Aave, Compound, and other DeFi protocols
-- **TWAP Execution**: Time-weighted average price orders with configurable parameters
-- **Cross-chain Yield Monitoring**: Etherlink integration for yield arbitrage opportunities
-- **Automated Rebalancing**: Portfolio optimization based on yield differentials
+- **Real 1inch Swaps**: Execute actual token swaps through 1inch Protocol
+- **Limit Orders**: Create cryptographically signed limit orders
+- **TWAP Strategies**: Time-weighted average price execution
+- **Live Dashboard**: Real-time treasury monitoring
+- **Multi-token Support**: USDC, WMATIC, WETH, DAI
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js 16+
-- MetaMask with Polygon mainnet
-- Small amount of MATIC for gas (~$5)
+- Polygon wallet with USDC balance
+- 1inch API key
 
 ### Setup
+
+1. **Install dependencies**:
 ```bash
-# Install dependencies
+cd keeper
 npm install
-cd contracts && npm install
-
-# Configure environment
-cp .env.example .env
-# Add your private key to .env
-
-# Deploy to Polygon mainnet
-cd contracts
-npx hardhat deploy --network polygon
-
-# Start frontend
-cd ../frontend
-npm run dev
 ```
 
-## 🏗️ Architecture
+2. **Configure environment**:
+```bash
+cp .env.example .env
+# Edit .env with your credentials:
+# PRIVATE_KEY=your_wallet_private_key
+# POLYGON_RPC_URL=your_polygon_rpc_url
+# ONEINCH_API_KEY=your_1inch_api_key
+```
 
-### Smart Contracts (Polygon Mainnet)
-- `YieldOracle.sol` - Dynamic yield data aggregation from DeFi protocols
-- `LimitOrderManager.sol` - 1inch Protocol integration wrapper
-- `YieldGatedTWAP.sol` - TWAP execution with yield threshold logic
-- Token contracts for USDC, WMATIC, WETH, DAI on Polygon
+3. **Run treasury operations**:
+```bash
+# Get treasury status
+node main.js status
 
-### Frontend
-- React/Next.js professional dashboard
-- Real-time portfolio tracking
-- Live 1inch price quotes
-- Wallet connection and transaction execution
+# Check balances
+node main.js balances
 
-## 🔧 Technical Implementation
+# Execute swap
+node main.js swap USDC WMATIC 1000000
 
-### Yield Data Sources
-- **Aave v3**: Lending rates for USDC, WETH, WMATIC on Polygon
-- **Compound**: Supply rates for supported assets
-- **QuickSwap**: LP token yields and farming rewards
-- **Etherlink**: Cross-chain yield opportunities via bridge protocols
+# Run TWAP strategy
+node main.js twap USDC WMATIC 5 3 10
 
-### 1inch Integration
-- **Swap API**: Optimal routing for token exchanges
-- **Limit Orders**: Conditional execution based on price/yield thresholds
-- **Price Discovery**: Real-time price feeds for yield calculations
+# Run full demo
+node main.js
+```
+
+4. **Start dashboard**:
+```bash
+cd ../frontend
+node serve.js
+# Open http://localhost:3000
+```
+
+## 📊 Dashboard
+
+The live dashboard shows:
+- Real-time token balances
+- Transaction history with Polygonscan links
+- Active limit orders
+- TWAP strategy status
+
+## 🔧 Architecture
+
+### Core Components
+
+- **`treasury-manager.js`**: Main treasury operations class
+- **`main.js`**: CLI interface and demo execution
+- **`dashboard.html`**: Real-time web interface
+- **`serve.js`**: Simple HTTP server
+
+### Key Functions
+
+- `executeSwap()`: Real 1inch swap execution
+- `createLimitOrder()`: Signed limit order creation
+- `executeTWAP()`: Multi-tranche TWAP strategy
+- `getBalances()`: Multi-token balance checking
+
+## 🌐 Live Integration
+
+### Verified Transactions
+- **Real Swap**: `0x03e26c894270f8c9e00acb17a6d67e389b53b98dcf9427fdbc6b0655ef0f939d`
+- **Block**: `74521584`
+- **Gas Used**: `199,620`
+- **Received**: `2.169497879499409306 WMATIC`
+
+### Contracts
+- **1inch Router**: `0x111111125421ca6dc452d289314280a0f8842a65`
+- **USDC**: `0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359`
+- **WMATIC**: `0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270`
+
+## 📈 Usage Examples
+
+### Execute Single Swap
+```javascript
+const { TreasuryManager } = require('./keeper/treasury-manager');
+const treasury = new TreasuryManager();
+
+const result = await treasury.executeSwap('USDC', 'WMATIC', '1000000');
+console.log('Swap result:', result);
+```
+
+### Create Limit Order
+```javascript
+const order = await treasury.createLimitOrder('USDC', 'WMATIC', '1000000', '4000000000000000000');
+console.log('Order hash:', order.orderHash);
+```
 
 ### TWAP Strategy
-- **Configurable Parameters**: Order size, time intervals, slippage tolerance
-- **Yield Threshold Logic**: Execute only when target yield > current + threshold
-- **Gas Optimization**: Batch operations to minimize transaction costs
-
-## 📊 Yield Calculation Algorithm
-
-```solidity
-function calculateDynamicYield(address token, uint256 amount) external view returns (uint256) {
-    uint256 aaveRate = getAaveSupplyRate(token);
-    uint256 compoundRate = getCompoundSupplyRate(token);
-    uint256 lpYield = getQuickSwapLPYield(token);
-    
-    // Weight by liquidity depth
-    uint256 weightedYield = (aaveRate * aaveLiquidity + 
-                            compoundRate * compoundLiquidity + 
-                            lpYield * lpLiquidity) / totalLiquidity;
-    
-    return weightedYield;
-}
-```
-
-### Cross-chain Yield Arbitrage
-- Monitor yield differentials between Polygon and Etherlink
-- Execute atomic swaps when arbitrage opportunities exceed gas costs
-- Use 1inch for optimal routing and minimal slippage
-
-## 📁 Project Structure
-
-```
-├── contracts/           # Smart contracts (Polygon mainnet)
-│   ├── src/            # Solidity contracts
-│   ├── test/           # Contract tests
-│   └── scripts/        # Deployment scripts
-├── frontend/           # React dashboard
-├── docs/              # Documentation
-└── README.md          # This file
-```
-
-## 🧪 API Integration
-
-### 1inch Protocol API
-```bash
-# Get supported tokens on Polygon
-curl -H "Authorization: Bearer <API_KEY>" \
-  "https://api.1inch.dev/swap/v6.0/137/tokens"
-
-# Get swap quote
-curl -H "Authorization: Bearer <API_KEY>" \
-  "https://api.1inch.dev/swap/v6.0/137/quote?src=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&dst=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&amount=1000000"
-```
-
-### Etherlink Integration
 ```javascript
-// Cross-chain yield monitoring
-const etherlinkYield = await fetch('https://api.etherlink.com/yields/polygon');
-const polygonYield = await getPolygonYields();
-const arbitrageOpportunity = etherlinkYield.rate - polygonYield.rate;
+const twap = await treasury.executeTWAP('USDC', 'WMATIC', '5', 3, 10);
+console.log('TWAP completed:', twap);
 ```
 
-## 🎬 Demo Flow
+## 🔐 Security
 
-1. **Connect Wallet** - MetaMask to Polygon mainnet
-2. **View Portfolio** - See real token balances
-3. **Get Quote** - Live 1inch price quote
-4. **Execute Swap** - Real transaction on Polygon
-5. **Track Results** - Updated portfolio balances
+- Private keys stored in environment variables
+- Token approvals managed automatically
+- Transaction signing with ethers.js
+- Rate limiting on API calls
 
-## 📊 Technical Details
+## 📝 Data Files
 
-- **Blockchain**: Polygon mainnet (Chain ID: 137)
-- **API**: 1inch Protocol v6.0
-- **Gas Cost**: ~30 gwei (~$0.01 per transaction)
-- **Frontend**: React 18, Next.js 13, TailwindCSS
-- **Wallet**: MetaMask, WalletConnect support
+Generated in `frontend/` directory:
+- `treasury-status.json`: Current balances and status
+- `latest-swap.json`: Most recent swap transaction
+- `latest-limit-order.json`: Most recent limit order
+- `executed-swap.json`: Verified swap execution data
+
+## 🎯 Production Ready
+
+This system has been tested with real transactions on Polygon mainnet:
+- ✅ Real USDC/WMATIC swaps executed
+- ✅ Real gas fees paid
+- ✅ Real tokens received
+- ✅ Verifiable on Polygonscan
+- ✅ Live 1inch API integration
+
+## 🚀 Deployment
+
+The system is ready for production deployment with:
+- Error handling and retry logic
+- Comprehensive logging
+- Real-time monitoring
+- Multi-token support
+- Scalable architecture
 
 ---
 
-**Built for ETHGlobal UNITE Hackathon**  
-*Real treasury management, not simulation*
+**Built for hackathon demonstration of real 1inch Protocol integration**

@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "orderHash": "0xb74b2468cbead300e7462c4aa420b4df25b4a99bcd0970efb40e7efbf86e07be",
+  "signature": "0xc755546f5918cba6429147279dc8da2569d79ad158e62a5b5f4be7f934fe48e122ba2a58b799a855afce12d004a1cd61806dfa6d0f29f26cbafc8bc865a3e2a41c",
+  "orderData": {
+    "makerAsset": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+    "takerAsset": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+    "maker": "0x4D3e9A008CfA2eBa34d5D32F86141678427E7CF4",
+    "receiver": "0x0000000000000000000000000000000000000000",
+    "makingAmount": "1000000",
+    "takingAmount": "4339202195459502565",
+    "salt": "1753723768341",
+    "extension": "0x00",
+    "makerTraits": "0"
+  },
+  "fromToken": "USDC",
+  "toToken": "WMATIC",
+  "createdAt": "2025-07-28T17:29:28.349Z"
+}
