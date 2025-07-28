@@ -1,30 +1,8 @@
 {
-  "name": "automated-treasury-keeper",
-  "version": "1.0.0",
-  "description": "Automated keeper system for treasury management with 1inch integration",
-  "main": "automated-treasury-keeper.js",
-  "scripts": {
-    "start": "node automated-treasury-keeper.js",
-    "dev": "nodemon automated-treasury-keeper.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "defi",
-    "treasury",
-    "1inch",
-    "polygon",
-    "automation",
-    "yield"
-  ],
-  "author": "Treasury Management System",
-  "license": "MIT",
   "dependencies": {
-    "ethers": "^6.8.0",
-    "axios": "^1.6.0",
-    "dotenv": "^16.3.0",
-    "ws": "^8.14.0"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.0"
+    "@1inch/limit-order-sdk": "^4.9.5-rc.0",
+    "axios": "^1.11.0",
+    "dotenv": "^17.2.1",
+    "ethers": "^6.15.0"
   }
 }
