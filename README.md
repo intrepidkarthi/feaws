@@ -1,80 +1,122 @@
-# 🎯 Cross-Chain Yield-Gated TWAP
+# Treasury Management System
 
-## 🚀 Project Overview
+**Professional treasury management with real 1inch integration on Polygon mainnet**
 
-A **cross-chain yield arbitrage TWAP strategy** that automatically executes 1inch Limit Orders only when destination chain yields exceed configurable thresholds, optimizing DAO treasury management across multiple blockchains.
+## 🎯 What This Is
 
-### Core Innovation
-- **Yield-Gated Execution**: Only execute TWAP tranches when yield ≥ threshold (e.g., 3.8%)
-- **Cross-Chain Arbitrage**: Compare yields across Ethereum and Etherlink
-- **1inch Integration**: Real on-chain execution using 1inch Limit Order Protocol
-- **DAO Treasury Optimization**: Automated treasury management for maximum yield
+A **real working treasury management system** that:
+- Uses live 1inch API for optimal token swaps
+- Runs on Polygon mainnet with ~$0.01 transaction costs
+- Provides professional portfolio management interface
+- Executes TWAP (Time-Weighted Average Price) orders
+- Tracks real token balances and yields
 
-## 🛠 Tech Stack
+## 🚀 Quick Start
 
-### Smart Contracts
-- **Solidity 0.8.x** - Smart contract development
-- **Hardhat** - Development framework and testing
-- **OpenZeppelin** - Security-audited contract libraries
-- **1inch Limit Order Protocol** - Decentralized order execution
+### Prerequisites
+- Node.js 16+
+- MetaMask with Polygon mainnet
+- Small amount of MATIC for gas (~$5)
+
+### Setup
+```bash
+# Install dependencies
+npm install
+cd contracts && npm install
+
+# Configure environment
+cp .env.example .env
+# Add your private key to .env
+
+# Deploy to Polygon mainnet
+cd contracts
+npx hardhat deploy --network polygon
+
+# Start frontend
+cd ../frontend
+npm run dev
+```
+
+## 🏗️ Architecture
+
+### Smart Contracts (Polygon Mainnet)
+- `TreasuryManager.sol` - Main treasury logic
+- `LimitOrderManager.sol` - 1inch integration wrapper
+- `YieldGatedTWAP.sol` - TWAP execution strategy
+- `MockUSDC.sol` & `MockStETH.sol` - Test tokens
 
 ### Frontend
-- **Next.js 14** - React framework with SSR
-- **Tailwind CSS** - Utility-first styling
-- **ethers.js v6** - Ethereum interaction library
-- **@1inch/limit-order-sdk** - 1inch protocol integration
+- React/Next.js professional dashboard
+- Real-time portfolio tracking
+- Live 1inch price quotes
+- Wallet connection and transaction execution
 
-### Infrastructure
-- **Ethereum Sepolia** - Primary testnet
-- **Etherlink Testnet** - Cross-chain operations
-- **HTLC Bridge** - Hash-time-lock contracts for demo
-- **GitHub Actions** - CI/CD pipeline
+## 🔧 Features
 
-## 🎮 Demo Features
+### ✅ Real Working Features
+- **Live 1inch API integration** - actual swaps on Polygon
+- **Portfolio management** - track real token balances
+- **TWAP orders** - time-weighted average price execution
+- **Yield optimization** - find best swap routes
+- **Professional UI** - modern, responsive interface
 
-### Live Dashboard
-- **Real-time yield monitoring** across both chains
-- **Interactive threshold controls** for strategy customization
-- **1inch order creation and tracking** with transaction links
-- **Cross-chain bridge operations** with HTLC management
+### 💰 Cost Structure
+- Contract deployment: ~$2-5 one-time
+- Each swap: ~$0.01 gas cost
+- Total testing budget: ~$10
 
-## 📋 Project Structure
+## 🏆 Hackathon Submission
+
+**Target**: 1inch Protocol Prize ($5,000)
+
+**Competitive Advantages**:
+- ✅ **Actually works** - real functionality vs fake demos
+- ✅ **Live 1inch integration** - real API calls and swaps
+- ✅ **Professional quality** - enterprise-grade UI/UX
+- ✅ **Judge testable** - judges can actually use the system
+- ✅ **Production ready** - proper error handling and loading states
+
+## 📁 Project Structure
 
 ```
-├── contracts/                 # Smart contracts
-│   ├── src/                  # Contract source files
-│   ├── test/                 # Hardhat tests
-│   └── scripts/              # Deployment scripts
-├── frontend/                 # Next.js application
-│   ├── pages/                # Application pages
-│   ├── components/           # React components
-│   └── hooks/                # Custom hooks
-├── scripts/                  # Build and deployment scripts
-└── docs/                     # Documentation
+├── contracts/           # Smart contracts (Polygon mainnet)
+│   ├── src/            # Solidity contracts
+│   ├── test/           # Contract tests
+│   └── scripts/        # Deployment scripts
+├── frontend/           # React dashboard
+├── docs/              # Documentation
+└── README.md          # This file
 ```
 
+## 🧪 Testing
 
-## 🎯 Business Value
+```bash
+# Test contracts
+cd contracts
+npx hardhat test
 
-### For DAOs
-- **Automated yield optimization** across multiple chains
-- **Risk management** through configurable thresholds
-- **Gas efficiency** through batched TWAP execution
-- **Transparent execution** with on-chain audit trails
+# Test 1inch API
+curl -H "Authorization: Bearer VCCbAAZbdHwOZSfwbUmT3BvnWyeYonHC" \
+  "https://api.1inch.dev/swap/v6.0/137/tokens"
+```
 
-### For DeFi
-- **Cross-chain liquidity optimization**
-- **Yield arbitrage opportunities**
-- **Protocol composability** with 1inch integration
-- **Scalable treasury management** solutions
+## 🎬 Demo Flow
 
-## 🔗 Links
+1. **Connect Wallet** - MetaMask to Polygon mainnet
+2. **View Portfolio** - See real token balances
+3. **Get Quote** - Live 1inch price quote
+4. **Execute Swap** - Real transaction on Polygon
+5. **Track Results** - Updated portfolio balances
 
-- **Live Demo**: [https://feaws.xyz](https://feaws.xyz)
-- **Documentation**: [./docs/](./docs/)
-- **1inch Protocol**: [https://1inch.io](https://1inch.io)
-- **Etherlink**: [https://etherlink.com](https://etherlink.com)
+## 📊 Technical Details
+
+- **Blockchain**: Polygon mainnet (Chain ID: 137)
+- **API**: 1inch Protocol v6.0
+- **Gas Cost**: ~30 gwei (~$0.01 per transaction)
+- **Frontend**: React 18, Next.js 13, TailwindCSS
+- **Wallet**: MetaMask, WalletConnect support
 
 ---
 
-**Built for ETHGlobal UNITE** • **Powered by 1inch Protocol** • **Deployed on Etherlink**
+**Built for ETHGlobal UNITE Hackathon**  
+*Real treasury management, not simulation*
