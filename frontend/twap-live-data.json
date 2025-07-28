@@ -1,0 +1,110 @@
+{
+  "timestamp": 1753702094396,
+  "strategy": "1inch TWAP",
+  "status": "running",
+  "progress": {
+    "currentTranche": 4,
+    "totalTranches": 4,
+    "executedAmount": 20,
+    "totalAmount": 20,
+    "percentage": "100.0"
+  },
+  "orders": {
+    "active": 1,
+    "completed": 3,
+    "total": 4
+  },
+  "portfolio": {
+    "usdc": 31.696202,
+    "stmatic": 0,
+    "totalValue": 31.696202,
+    "initialValue": 31.696202
+  },
+  "yields": {
+    "usdc": 3.4560519646183225,
+    "stmatic": 5.229000624123192,
+    "yieldDiff": 1.7729486595048698
+  },
+  "recentActivity": [
+    {
+      "timestamp": 1753701414108,
+      "tranche": 1,
+      "amount": 5,
+      "orderHash": "0xc036d81c05aced1297a5694d95c8111fa65f606ce122f0597950430186e793d3",
+      "yieldDiff": 1.2412971451234052,
+      "status": "filled",
+      "executedAt": 1753701933294
+    },
+    {
+      "timestamp": 1753701534725,
+      "tranche": 2,
+      "amount": 5,
+      "orderHash": "0x2c35f80cf710cb797d4c91877549f60ec08291937528afe7c818ea4b15660cee",
+      "yieldDiff": 1.3804778029633171,
+      "status": "filled",
+      "executedAt": 1753701715434
+    },
+    {
+      "timestamp": 1753701655428,
+      "tranche": 3,
+      "amount": 5,
+      "orderHash": "0xcc6bf2e844b1f2c4a35233c90e6250fcb43bd505c69df859df4e82aa3aa0b946",
+      "yieldDiff": 1.3576026896859066,
+      "status": "filled",
+      "executedAt": 1753702094191
+    },
+    {
+      "timestamp": 1753701783269,
+      "tranche": 4,
+      "amount": 5,
+      "orderHash": "0xd63900c6e853c66a7cff327731bf6abd38d358e174d196b951dedc5de163e319",
+      "yieldDiff": 1.4914005940796122,
+      "status": "created"
+    }
+  ],
+  "allOrders": [
+    {
+      "orderHash": "0xd63900c6e853c66a7cff327731bf6abd38d358e174d196b951dedc5de163e319",
+      "makerAsset": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "takerAsset": "0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
+      "makingAmount": "5000000",
+      "takingAmount": "5145000000000000000",
+      "maker": "0x4D3e9A008CfA2eBa34d5D32F86141678427E7CF4",
+      "createdAt": 1753701783269,
+      "status": "active"
+    },
+    {
+      "orderHash": "0x2c35f80cf710cb797d4c91877549f60ec08291937528afe7c818ea4b15660cee",
+      "makerAsset": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "takerAsset": "0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
+      "makingAmount": "5000000",
+      "takingAmount": "5145000000000000000",
+      "maker": "0x4D3e9A008CfA2eBa34d5D32F86141678427E7CF4",
+      "createdAt": 1753701534724,
+      "status": "filled",
+      "executedAt": 1753701715433
+    },
+    {
+      "orderHash": "0xc036d81c05aced1297a5694d95c8111fa65f606ce122f0597950430186e793d3",
+      "makerAsset": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "takerAsset": "0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
+      "makingAmount": "5000000",
+      "takingAmount": "5145000000000000000",
+      "maker": "0x4D3e9A008CfA2eBa34d5D32F86141678427E7CF4",
+      "createdAt": 1753701414108,
+      "status": "filled",
+      "executedAt": 1753701933294
+    },
+    {
+      "orderHash": "0xcc6bf2e844b1f2c4a35233c90e6250fcb43bd505c69df859df4e82aa3aa0b946",
+      "makerAsset": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "takerAsset": "0x3A58a54C066FdC0f2D55FC9C89F0415C92eBf3C4",
+      "makingAmount": "5000000",
+      "takingAmount": "5145000000000000000",
+      "maker": "0x4D3e9A008CfA2eBa34d5D32F86141678427E7CF4",
+      "createdAt": 1753701655428,
+      "status": "filled",
+      "executedAt": 1753702094190
+    }
+  ]
+}

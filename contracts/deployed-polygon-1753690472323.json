@@ -1,0 +1,37 @@
+{
+  "network": {
+    "name": "polygon",
+    "chainId": 137,
+    "deployer": "0x4D3e9A008CfA2eBa34d5D32F86141678427E7CF4",
+    "deployedAt": "2025-07-28T08:14:32.321Z",
+    "gasUsed": "TBD"
+  },
+  "contracts": {
+    "tokens": {
+      "USDC": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      "WETH": "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+      "WMATIC": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+      "DAI": "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+      "stMATIC": "0x3a58a54c066fdc0f2d55fc9c89f0415c92ebf3c4"
+    },
+    "DynamicYieldOracle": "0x1944074Fd0d428bB115a4AB4819545E7278d8394",
+    "OneInchLimitOrderManager": "0xea699aFd83949D65810A95A6c752950da72521A9",
+    "TreasuryManager": "0x2A7786cdf76d39C5aC559081926B1A34b1C96154"
+  },
+  "configuration": {
+    "polygon1inchProtocol": "0x111111125421ca6dc452d289314280a0f8842a65",
+    "yieldSources": {
+      "aaveV3": "Dynamic lending rates",
+      "quickswap": "LP token yields",
+      "compound": "Supply rates",
+      "stMATIC": "Liquid staking rewards"
+    },
+    "supportedTokens": {
+      "USDC": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+      "WETH": "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+      "WMATIC": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+      "DAI": "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+      "stMATIC": "0x3a58a54c066fdc0f2d55fc9c89f0415c92ebf3c4"
+    }
+  }
+}

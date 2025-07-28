@@ -46,62 +46,69 @@ async function main() {
     
     deployedContracts.tokens = polygonTokens;
     
-    // 2. Deploy Yield Oracle
-    console.log("\n📊 Deploying Yield Oracle...");
+    // 2. Deploy Dynamic Yield Oracle
+    console.log("\n📊 Deploying Dynamic Yield Oracle...");
     
-    const YieldOracle = await ethers.getContractFactory("YieldOracle");
-    const yieldOracle = await YieldOracle.deploy();
-    await yieldOracle.waitForDeployment();
-    deployedContracts.YieldOracle = await yieldOracle.getAddress();
-    console.log("  YieldOracle deployed to:", deployedContracts.YieldOracle);
+    const DynamicYieldOracle = await ethers.getContractFactory("DynamicYieldOracle");
+    const dynamicYieldOracle = await DynamicYieldOracle.deploy();
+    await dynamicYieldOracle.waitForDeployment();
+    deployedContracts.DynamicYieldOracle = await dynamicYieldOracle.getAddress();
+    console.log("  DynamicYieldOracle deployed to:", deployedContracts.DynamicYieldOracle);
     
-    // 3. Deploy Limit Order Manager (1inch integration)
+    // 3. Deploy 1inch Limit Order Manager
     console.log("\n🔗 Deploying 1inch Limit Order Manager...");
     
-    // Polygon 1inch Limit Order Protocol address
-    const POLYGON_1INCH_LIMIT_ORDER = "0x94Bc2a1C732BcAd7343B25af48385Fe76E08734f";
+    // Polygon 1inch Limit Order Protocol v4 address
+    const POLYGON_1INCH_LIMIT_ORDER = "0x111111125421ca6dc452d289314280a0f8842a65";
     
-    const LimitOrderManager = await ethers.getContractFactory("LimitOrderManager");
-    const limitOrderManager = await LimitOrderManager.deploy(POLYGON_1INCH_LIMIT_ORDER);
-    await limitOrderManager.waitForDeployment();
-    deployedContracts.LimitOrderManager = await limitOrderManager.getAddress();
-    console.log("  LimitOrderManager deployed to:", deployedContracts.LimitOrderManager);
-    console.log("  Connected to 1inch Protocol:", POLYGON_1INCH_LIMIT_ORDER);
-    
-    // 4. Deploy TWAP Strategy
-    console.log("\n⚡ Deploying Yield-Gated TWAP Strategy...");
-    
-    const YieldGatedTWAP = await ethers.getContractFactory("YieldGatedTWAP");
-    const yieldGatedTWAP = await YieldGatedTWAP.deploy(
-        deployedContracts.YieldOracle,
-        deployedContracts.LimitOrderManager
+    const OneInchLimitOrderManager = await ethers.getContractFactory("OneInchLimitOrderManager");
+    const oneInchManager = await OneInchLimitOrderManager.deploy(
+        deployedContracts.TreasuryManager || "0x0000000000000000000000000000000000000000", // Will be updated
+        deployedContracts.DynamicYieldOracle
     );
-    await yieldGatedTWAP.waitForDeployment();
-    deployedContracts.YieldGatedTWAP = await yieldGatedTWAP.getAddress();
-    console.log("  YieldGatedTWAP deployed to:", deployedContracts.YieldGatedTWAP);
+    await oneInchManager.waitForDeployment();
+    deployedContracts.OneInchLimitOrderManager = await oneInchManager.getAddress();
+    console.log("  OneInchLimitOrderManager deployed to:", deployedContracts.OneInchLimitOrderManager);
+    console.log("  Connected to 1inch Protocol v4:", POLYGON_1INCH_LIMIT_ORDER);
+    
+    // 4. Deploy Treasury Manager
+    console.log("\n🏦 Deploying Treasury Manager...");
+    
+    const TreasuryManager = await ethers.getContractFactory("TreasuryManager");
+    const treasuryManager = await TreasuryManager.deploy(
+        deployedContracts.DynamicYieldOracle
+    );
+    await treasuryManager.waitForDeployment();
+    deployedContracts.TreasuryManager = await treasuryManager.getAddress();
+    console.log("  TreasuryManager deployed to:", deployedContracts.TreasuryManager);
+    
+    // Update OneInchLimitOrderManager with TreasuryManager address
+    console.log("  🔄 Updating OneInchLimitOrderManager treasury address...");
+    await oneInchManager.updateTreasuryManager(deployedContracts.TreasuryManager);
+    console.log("  ✅ Treasury address updated in OneInchLimitOrderManager");
     
     // 5. Initial Configuration
     console.log("\n⚙️  Configuring Contracts...");
     
-    // Configure yield oracle with Polygon chain and DeFi protocols
-    await yieldOracle.addChain(137, "Polygon"); // Polygon mainnet
-    console.log("  ✅ Added Polygon chain to YieldOracle");
+    // Configure dynamic yield oracle with supported tokens
+    await dynamicYieldOracle.addSupportedToken(polygonTokens.USDC);
+    await dynamicYieldOracle.addSupportedToken(polygonTokens.WETH);
+    await dynamicYieldOracle.addSupportedToken(polygonTokens.WMATIC);
+    await dynamicYieldOracle.addSupportedToken(polygonTokens.DAI);
+    await dynamicYieldOracle.addSupportedToken(polygonTokens.stMATIC);
+    console.log("  ✅ Added supported tokens to DynamicYieldOracle");
     
-    // Add real Polygon assets
-    await yieldOracle.addAsset(polygonTokens.USDC, "USDC", 6);
-    await yieldOracle.addAsset(polygonTokens.WETH, "WETH", 18);
-    await yieldOracle.addAsset(polygonTokens.WMATIC, "WMATIC", 18);
-    await yieldOracle.addAsset(polygonTokens.DAI, "DAI", 18);
-    await yieldOracle.addAsset(polygonTokens.stMATIC, "stMATIC", 18);
-    console.log("  ✅ Added Polygon mainnet tokens to YieldOracle");
+    // Initialize yield data for tokens
+    await dynamicYieldOracle.updateAllYields();
+    console.log("  ✅ Initial yield data calculated");
     
-    // Configure yield sources (will be updated dynamically by oracle)
-    console.log("  🔄 Yield sources will be updated dynamically from:");
-    console.log("    - Aave v3 Polygon: Lending rates");
-    console.log("    - QuickSwap: LP yields");
-    console.log("    - Compound: Supply rates");
-    console.log("    - stMATIC: Liquid staking rewards");
-    console.log("  ✅ Dynamic yield calculation configured");
+    // Configure yield sources
+    console.log("  🔄 Yield sources configured:");
+    console.log("    - Aave v3 Polygon: 40% weight (lending rates)");
+    console.log("    - QuickSwap LP: 30% weight (LP yields + farming)");
+    console.log("    - stMATIC: 20% weight (liquid staking rewards)");
+    console.log("    - Compound v3: 10% weight (supply rates)");
+    console.log("  ✅ Dynamic yield calculation ready");
     
     // 6. Save deployment data
     const deploymentData = {
