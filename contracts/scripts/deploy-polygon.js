@@ -28,20 +28,23 @@ async function main() {
     
     const deployedContracts = {};
     
-    // 1. Deploy Mock Tokens (for testing)
-    console.log("\n📦 Deploying Mock Tokens...");
+    // 1. Configure Polygon Token Addresses
+    console.log("\n📦 Configuring Polygon Mainnet Tokens...");
     
-    const MockUSDC = await ethers.getContractFactory("MockUSDC");
-    const mockUSDC = await MockUSDC.deploy();
-    await mockUSDC.waitForDeployment();
-    deployedContracts.MockUSDC = await mockUSDC.getAddress();
-    console.log("  MockUSDC deployed to:", deployedContracts.MockUSDC);
+    const polygonTokens = {
+        USDC: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+        WETH: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619", 
+        WMATIC: "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+        DAI: "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+        stMATIC: "0x3a58a54c066fdc0f2d55fc9c89f0415c92ebf3c4" // Liquid staking token
+    };
     
-    const MockStETH = await ethers.getContractFactory("MockStETH");
-    const mockStETH = await MockStETH.deploy();
-    await mockStETH.waitForDeployment();
-    deployedContracts.MockStETH = await mockStETH.getAddress();
-    console.log("  MockStETH deployed to:", deployedContracts.MockStETH);
+    console.log("  Using Polygon mainnet tokens:");
+    Object.entries(polygonTokens).forEach(([symbol, address]) => {
+        console.log(`    ${symbol}: ${address}`);
+    });
+    
+    deployedContracts.tokens = polygonTokens;
     
     // 2. Deploy Yield Oracle
     console.log("\n📊 Deploying Yield Oracle...");
@@ -80,28 +83,25 @@ async function main() {
     // 5. Initial Configuration
     console.log("\n⚙️  Configuring Contracts...");
     
-    // Configure yield oracle with Polygon chain
+    // Configure yield oracle with Polygon chain and DeFi protocols
     await yieldOracle.addChain(137, "Polygon"); // Polygon mainnet
     console.log("  ✅ Added Polygon chain to YieldOracle");
     
-    // Add assets
-    await yieldOracle.addAsset(deployedContracts.MockUSDC, "USDC", 6);
-    await yieldOracle.addAsset(deployedContracts.MockStETH, "stETH", 18);
-    console.log("  ✅ Added USDC and stETH to YieldOracle");
+    // Add real Polygon assets
+    await yieldOracle.addAsset(polygonTokens.USDC, "USDC", 6);
+    await yieldOracle.addAsset(polygonTokens.WETH, "WETH", 18);
+    await yieldOracle.addAsset(polygonTokens.WMATIC, "WMATIC", 18);
+    await yieldOracle.addAsset(polygonTokens.DAI, "DAI", 18);
+    await yieldOracle.addAsset(polygonTokens.stMATIC, "stMATIC", 18);
+    console.log("  ✅ Added Polygon mainnet tokens to YieldOracle");
     
-    // Set initial yields (example values)
-    await yieldOracle.setYield(137, deployedContracts.MockUSDC, 380); // 3.8%
-    await yieldOracle.setYield(137, deployedContracts.MockStETH, 520); // 5.2%
-    console.log("  ✅ Set initial yield rates");
-    
-    // Mint some test tokens to deployer
-    const mintAmount = ethers.parseUnits("100000", 6); // 100k USDC
-    await mockUSDC.mint(deployer.address, mintAmount);
-    console.log("  ✅ Minted 100,000 USDC to deployer");
-    
-    const mintAmountStETH = ethers.parseEther("1000"); // 1k stETH
-    await mockStETH.mint(deployer.address, mintAmountStETH);
-    console.log("  ✅ Minted 1,000 stETH to deployer");
+    // Configure yield sources (will be updated dynamically by oracle)
+    console.log("  🔄 Yield sources will be updated dynamically from:");
+    console.log("    - Aave v3 Polygon: Lending rates");
+    console.log("    - QuickSwap: LP yields");
+    console.log("    - Compound: Supply rates");
+    console.log("    - stMATIC: Liquid staking rewards");
+    console.log("  ✅ Dynamic yield calculation configured");
     
     // 6. Save deployment data
     const deploymentData = {
@@ -115,14 +115,13 @@ async function main() {
         contracts: deployedContracts,
         configuration: {
             polygon1inchProtocol: POLYGON_1INCH_LIMIT_ORDER,
-            initialYields: {
-                USDC: "3.8%",
-                stETH: "5.2%"
+            yieldSources: {
+                aaveV3: "Dynamic lending rates",
+                quickswap: "LP token yields", 
+                compound: "Supply rates",
+                stMATIC: "Liquid staking rewards"
             },
-            testTokens: {
-                usdcMinted: "100,000",
-                stethMinted: "1,000"
-            }
+            supportedTokens: polygonTokens
         }
     };
     
@@ -134,8 +133,6 @@ async function main() {
     console.log("\n🔍 CONTRACT VERIFICATION");
     console.log("========================");
     console.log("To verify contracts on PolygonScan, run:");
-    console.log(`npx hardhat verify --network polygon ${deployedContracts.MockUSDC}`);
-    console.log(`npx hardhat verify --network polygon ${deployedContracts.MockStETH}`);
     console.log(`npx hardhat verify --network polygon ${deployedContracts.YieldOracle}`);
     console.log(`npx hardhat verify --network polygon ${deployedContracts.LimitOrderManager} "${POLYGON_1INCH_LIMIT_ORDER}"`);
     console.log(`npx hardhat verify --network polygon ${deployedContracts.YieldGatedTWAP} "${deployedContracts.YieldOracle}" "${deployedContracts.LimitOrderManager}"`);
@@ -144,11 +141,13 @@ async function main() {
     console.log("\n🖥️  FRONTEND CONFIGURATION");
     console.log("==========================");
     console.log("Add these to your frontend .env:");
-    console.log(`NEXT_PUBLIC_POLYGON_USDC_ADDRESS=${deployedContracts.MockUSDC}`);
-    console.log(`NEXT_PUBLIC_POLYGON_STETH_ADDRESS=${deployedContracts.MockStETH}`);
     console.log(`NEXT_PUBLIC_POLYGON_YIELD_ORACLE=${deployedContracts.YieldOracle}`);
     console.log(`NEXT_PUBLIC_POLYGON_LIMIT_ORDER_MANAGER=${deployedContracts.LimitOrderManager}`);
     console.log(`NEXT_PUBLIC_POLYGON_TWAP_STRATEGY=${deployedContracts.YieldGatedTWAP}`);
+    console.log("\n# Polygon Token Addresses:");
+    Object.entries(polygonTokens).forEach(([symbol, address]) => {
+        console.log(`NEXT_PUBLIC_POLYGON_${symbol}_ADDRESS=${address}`);
+    });
     
     console.log("\n🎉 DEPLOYMENT COMPLETE!");
     console.log("=======================");

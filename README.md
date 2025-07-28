@@ -1,15 +1,18 @@
 # Treasury Management System
 
-**Professional treasury management with real 1inch integration on Polygon mainnet**
+**Automated treasury management with 1inch Protocol integration and dynamic yield optimization**
 
-## 🎯 What This Is
+## Technical Overview
 
-A **real working treasury management system** that:
-- Uses live 1inch API for optimal token swaps
-- Runs on Polygon mainnet with ~$0.01 transaction costs
-- Provides professional portfolio management interface
-- Executes TWAP (Time-Weighted Average Price) orders
-- Tracks real token balances and yields
+A decentralized treasury management system that integrates 1inch Protocol for optimal token swaps and Etherlink for cross-chain yield opportunities. The system uses dynamic yield calculation based on real DeFi protocol rates and executes TWAP orders when yield thresholds are met.
+
+### Core Features
+
+- **1inch Protocol Integration**: Direct API integration for swap routing and execution
+- **Dynamic Yield Calculation**: Real-time yield data from Aave, Compound, and other DeFi protocols
+- **TWAP Execution**: Time-weighted average price orders with configurable parameters
+- **Cross-chain Yield Monitoring**: Etherlink integration for yield arbitrage opportunities
+- **Automated Rebalancing**: Portfolio optimization based on yield differentials
 
 ## 🚀 Quick Start
 
@@ -40,10 +43,10 @@ npm run dev
 ## 🏗️ Architecture
 
 ### Smart Contracts (Polygon Mainnet)
-- `TreasuryManager.sol` - Main treasury logic
-- `LimitOrderManager.sol` - 1inch integration wrapper
-- `YieldGatedTWAP.sol` - TWAP execution strategy
-- `MockUSDC.sol` & `MockStETH.sol` - Test tokens
+- `YieldOracle.sol` - Dynamic yield data aggregation from DeFi protocols
+- `LimitOrderManager.sol` - 1inch Protocol integration wrapper
+- `YieldGatedTWAP.sol` - TWAP execution with yield threshold logic
+- Token contracts for USDC, WMATIC, WETH, DAI on Polygon
 
 ### Frontend
 - React/Next.js professional dashboard
@@ -51,30 +54,45 @@ npm run dev
 - Live 1inch price quotes
 - Wallet connection and transaction execution
 
-## 🔧 Features
+## 🔧 Technical Implementation
 
-### ✅ Real Working Features
-- **Live 1inch API integration** - actual swaps on Polygon
-- **Portfolio management** - track real token balances
-- **TWAP orders** - time-weighted average price execution
-- **Yield optimization** - find best swap routes
-- **Professional UI** - modern, responsive interface
+### Yield Data Sources
+- **Aave v3**: Lending rates for USDC, WETH, WMATIC on Polygon
+- **Compound**: Supply rates for supported assets
+- **QuickSwap**: LP token yields and farming rewards
+- **Etherlink**: Cross-chain yield opportunities via bridge protocols
 
-### 💰 Cost Structure
-- Contract deployment: ~$2-5 one-time
-- Each swap: ~$0.01 gas cost
-- Total testing budget: ~$10
+### 1inch Integration
+- **Swap API**: Optimal routing for token exchanges
+- **Limit Orders**: Conditional execution based on price/yield thresholds
+- **Price Discovery**: Real-time price feeds for yield calculations
 
-## 🏆 Hackathon Submission
+### TWAP Strategy
+- **Configurable Parameters**: Order size, time intervals, slippage tolerance
+- **Yield Threshold Logic**: Execute only when target yield > current + threshold
+- **Gas Optimization**: Batch operations to minimize transaction costs
 
-**Target**: 1inch Protocol Prize ($5,000)
+## 📊 Yield Calculation Algorithm
 
-**Competitive Advantages**:
-- ✅ **Actually works** - real functionality vs fake demos
-- ✅ **Live 1inch integration** - real API calls and swaps
-- ✅ **Professional quality** - enterprise-grade UI/UX
-- ✅ **Judge testable** - judges can actually use the system
-- ✅ **Production ready** - proper error handling and loading states
+```solidity
+function calculateDynamicYield(address token, uint256 amount) external view returns (uint256) {
+    uint256 aaveRate = getAaveSupplyRate(token);
+    uint256 compoundRate = getCompoundSupplyRate(token);
+    uint256 lpYield = getQuickSwapLPYield(token);
+    
+    // Weight by liquidity depth
+    uint256 weightedYield = (aaveRate * aaveLiquidity + 
+                            compoundRate * compoundLiquidity + 
+                            lpYield * lpLiquidity) / totalLiquidity;
+    
+    return weightedYield;
+}
+```
+
+### Cross-chain Yield Arbitrage
+- Monitor yield differentials between Polygon and Etherlink
+- Execute atomic swaps when arbitrage opportunities exceed gas costs
+- Use 1inch for optimal routing and minimal slippage
 
 ## 📁 Project Structure
 
@@ -88,16 +106,25 @@ npm run dev
 └── README.md          # This file
 ```
 
-## 🧪 Testing
+## 🧪 API Integration
 
+### 1inch Protocol API
 ```bash
-# Test contracts
-cd contracts
-npx hardhat test
-
-# Test 1inch API
-curl -H "Authorization: Bearer VCCbAAZbdHwOZSfwbUmT3BvnWyeYonHC" \
+# Get supported tokens on Polygon
+curl -H "Authorization: Bearer <API_KEY>" \
   "https://api.1inch.dev/swap/v6.0/137/tokens"
+
+# Get swap quote
+curl -H "Authorization: Bearer <API_KEY>" \
+  "https://api.1inch.dev/swap/v6.0/137/quote?src=0x2791bca1f2de4661ed88a30c99a7a9449aa84174&dst=0x7ceb23fd6bc0add59e62ac25578270cff1b9f619&amount=1000000"
+```
+
+### Etherlink Integration
+```javascript
+// Cross-chain yield monitoring
+const etherlinkYield = await fetch('https://api.etherlink.com/yields/polygon');
+const polygonYield = await getPolygonYields();
+const arbitrageOpportunity = etherlinkYield.rate - polygonYield.rate;
 ```
 
 ## 🎬 Demo Flow
