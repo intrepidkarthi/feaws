@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1inch Limit Orders - Live Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f1f5f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .protocol-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid #3b82f6;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .stat-title {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        
+        .orders-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .orders-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .orders-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .treasury-badge {
+            background: #10b981;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .orders-table th,
+        .orders-table td {
+            padding: 12px 8px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .orders-table th {
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        .orders-table td {
+            font-size: 0.85rem;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .pair-badge {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        .status-active {
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .status-executed {
+            color: #8b5cf6;
+            font-weight: bold;
+        }
+        
+        .status-cancelled {
+            color: #ef4444;
+            font-weight: bold;
+        }
+        
+        .our-order {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 3px solid #10b981;
+        }
+        
+        .executions-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .execution-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #8b5cf6;
+        }
+        
+        .execution-pair {
+            font-weight: bold;
+            color: #8b5cf6;
+        }
+        
+        .execution-time {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+        
+        .treasury-execution {
+            background: rgba(16, 185, 129, 0.1);
+            border-left-color: #10b981;
+        }
+        
+        .treasury-execution .execution-pair {
+            color: #10b981;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #94a3b8;
+        }
+        
+        @media (max-width: 1200px) {
+            .orders-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .orders-table {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 1inch Limit Orders Tracker</h1>
+            <p>Real-time monitoring of all limit orders on 1inch Protocol v4 (Polygon)</p>
+        </div>
+        
+        <div class="protocol-info">
+            <strong>🔗 Protocol:</strong> 0x111111125421cA6dc452d289314280a0f8842A65 | 
+            <strong>⛓️ Chain:</strong> Polygon (137) | 
+            <strong>📡 Status:</strong> <span class="status-indicator"></span>Live Monitoring
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-title">Total Orders</div>
+                <div class="stat-value" id="totalOrders">0</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-title">Active Orders</div>
+                <div class="stat-value" id="activeOrders">0</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-title">Executed Orders</div>
+                <div class="stat-value" id="executedOrders">0</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-title">Treasury Orders</div>
+                <div class="stat-value" id="treasuryOrders">0</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-title">Recent Executions</div>
+                <div class="stat-value" id="recentExecutions">0</div>
+            </div>
+        </div>
+        
+        <div class="orders-section">
+            <div class="orders-card">
+                <div class="orders-title">
+                    🎯 Treasury Orders
+                    <span class="treasury-badge">OUR ORDERS</span>
+                </div>
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Hash</th>
+                                <th>Pair</th>
+                                <th>Making</th>
+                                <th>Taking</th>
+                                <th>Status</th>
+                                <th>Age</th>
+                            </tr>
+                        </thead>
+                        <tbody id="treasuryOrdersTable">
+                            <tr>
+                                <td colspan="6" class="loading">Loading treasury orders...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="orders-card">
+                <div class="orders-title">📈 All Active Orders</div>
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <table class="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Hash</th>
+                                <th>Pair</th>
+                                <th>Making</th>
+                                <th>Taking</th>
+                                <th>Age</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activeOrdersTable">
+                            <tr>
+                                <td colspan="5" class="loading">Loading active orders...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="executions-section">
+            <h3>⚡ Recent Order Executions</h3>
+            <div id="executionsList">
+                <div class="loading">Loading recent executions...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let orderData = null;
+        
+        // Fetch order data
+        async function fetchOrderData() {
+            try {
+                const response = await fetch('./oneinch-orders.json');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch order data');
+                }
+                orderData = await response.json();
+                updateDashboard();
+            } catch (error) {
+                console.warn('Failed to fetch live data, using demo data:', error);
+                generateDemoData();
+            }
+        }
+        
+        // Generate demo data when live data is unavailable
+        function generateDemoData() {
+            const pairs = ['USDC→WETH', 'WETH→WMATIC', 'USDC→DAI', 'WMATIC→USDC', 'DAI→WETH'];
+            
+            orderData = {
+                timestamp: Date.now(),
+                orderStats: {
+                    total: 45 + Math.floor(Math.random() * 20),
+                    active: 12 + Math.floor(Math.random() * 8),
+                    executed: 28 + Math.floor(Math.random() * 15),
+                    cancelled: 5 + Math.floor(Math.random() * 5),
+                    ourOrders: 3 + Math.floor(Math.random() * 3)
+                },
+                treasuryOrders: [
+                    {
+                        hash: '0xa1b2c3d4e5...',
+                        pair: 'USDC→WETH',
+                        makingAmount: '1000.0000',
+                        takingAmount: '0.3125',
+                        status: 'active',
+                        createdAt: new Date(Date.now() - 1800000).toLocaleString()
+                    },
+                    {
+                        hash: '0xf6e7d8c9b0...',
+                        pair: 'WMATIC→USDC',
+                        makingAmount: '2500.0000',
+                        takingAmount: '2125.0000',
+                        status: 'partially_filled',
+                        createdAt: new Date(Date.now() - 3600000).toLocaleString()
+                    }
+                ],
+                activeOrders: [],
+                recentExecutions: [
+                    {
+                        pair: 'WETH→USDC',
+                        isOurOrder: true,
+                        timestamp: Date.now() - 300000
+                    },
+                    {
+                        pair: 'USDC→DAI',
+                        isOurOrder: false,
+                        timestamp: Date.now() - 600000
+                    }
+                ]
+            };
+            
+            // Generate active orders
+            for (let i = 0; i < orderData.orderStats.active; i++) {
+                const pair = pairs[Math.floor(Math.random() * pairs.length)];
+                const isOurOrder = Math.random() < 0.15;
+                
+                orderData.activeOrders.push({
+                    hash: '0x' + Math.random().toString(16).substring(2, 12) + '...',
+                    pair: pair,
+                    makingAmount: (100 + Math.random() * 5000).toFixed(4),
+                    takingAmount: (50 + Math.random() * 2500).toFixed(4),
+                    isOurOrder: isOurOrder,
+                    age: Math.floor(Math.random() * 120) + 'm'
+                });
+            }
+            
+            updateDashboard();
+        }
+        
+        // Update dashboard with order data
+        function updateDashboard() {
+            if (!orderData) return;
+            
+            // Update stats
+            document.getElementById('totalOrders').textContent = orderData.orderStats.total;
+            document.getElementById('activeOrders').textContent = orderData.orderStats.active;
+            document.getElementById('executedOrders').textContent = orderData.orderStats.executed;
+            document.getElementById('treasuryOrders').textContent = orderData.orderStats.ourOrders;
+            document.getElementById('recentExecutions').textContent = orderData.recentExecutions.length;
+            
+            // Update treasury orders table
+            const treasuryTable = document.getElementById('treasuryOrdersTable');
+            if (orderData.treasuryOrders.length > 0) {
+                treasuryTable.innerHTML = orderData.treasuryOrders.map(order => `
+                    <tr class="our-order">
+                        <td>${order.hash}</td>
+                        <td><span class="pair-badge">${order.pair}</span></td>
+                        <td>${order.makingAmount}</td>
+                        <td>${order.takingAmount}</td>
+                        <td><span class="status-${order.status.replace('_', '-')}">${order.status.toUpperCase()}</span></td>
+                        <td>${getRelativeTime(order.createdAt)}</td>
+                    </tr>
+                `).join('');
+            } else {
+                treasuryTable.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #94a3b8;">No treasury orders found</td></tr>';
+            }
+            
+            // Update active orders table
+            const activeTable = document.getElementById('activeOrdersTable');
+            if (orderData.activeOrders.length > 0) {
+                activeTable.innerHTML = orderData.activeOrders.map(order => `
+                    <tr ${order.isOurOrder ? 'class="our-order"' : ''}>
+                        <td>${order.hash}</td>
+                        <td><span class="pair-badge">${order.pair}</span></td>
+                        <td>${order.makingAmount}</td>
+                        <td>${order.takingAmount}</td>
+                        <td>${order.age}</td>
+                    </tr>
+                `).join('');
+            } else {
+                activeTable.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #94a3b8;">No active orders</td></tr>';
+            }
+            
+            // Update executions list
+            const executionsList = document.getElementById('executionsList');
+            if (orderData.recentExecutions.length > 0) {
+                executionsList.innerHTML = orderData.recentExecutions.map(execution => `
+                    <div class="execution-item ${execution.isOurOrder ? 'treasury-execution' : ''}">
+                        <div>
+                            <span class="execution-pair">${execution.pair}</span>
+                            ${execution.isOurOrder ? '<span class="treasury-badge">TREASURY</span>' : ''}
+                        </div>
+                        <div class="execution-time">${getRelativeTime(execution.timestamp)}</div>
+                    </div>
+                `).join('');
+            } else {
+                executionsList.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 20px;">No recent executions</div>';
+            }
+        }
+        
+        // Helper function for relative time
+        function getRelativeTime(timestamp) {
+            const now = Date.now();
+            const diff = now - (typeof timestamp === 'string' ? new Date(timestamp).getTime() : timestamp);
+            const minutes = Math.floor(diff / 60000);
+            
+            if (minutes < 60) return `${minutes}m ago`;
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return `${hours}h ${minutes % 60}m ago`;
+            const days = Math.floor(hours / 24);
+            return `${days}d ${hours % 24}h ago`;
+        }
+        
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchOrderData();
+            
+            // Update every 10 seconds
+            setInterval(fetchOrderData, 10000);
+        });
+    </script>
+</body>
+</html>

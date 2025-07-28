@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Test - Fixed Y-Axis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: #1f2937;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .chart-container {
+            width: 80%;
+            height: 400px;
+            margin: 0 auto;
+            background: #374151;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Yield Chart Test - Fixed Y-Axis (0% to 10%)</h1>
+    <div class="chart-container">
+        <canvas id="testChart"></canvas>
+    </div>
+    
+    <script>
+        // Test data
+        const testData = {
+            labels: ['15:30:00', '15:30:05', '15:30:10', '15:30:15', '15:30:20'],
+            datasets: [
+                {
+                    label: 'USDC Yield',
+                    data: [5.42, 5.43, 5.41, 5.44, 5.42],
+                    borderColor: '#10B981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4
+                },
+                {
+                    label: 'WETH Yield',
+                    data: [6.17, 6.18, 6.16, 6.19, 6.17],
+                    borderColor: '#3B82F6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4
+                }
+            ]
+        };
+        
+        // Initialize chart with fixed Y-axis
+        const ctx = document.getElementById('testChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: testData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#D1D5DB' }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: '#9CA3AF' },
+                        grid: { color: '#374151' }
+                    },
+                    y: {
+                        min: 0,
+                        max: 10,
+                        ticks: { 
+                            color: '#9CA3AF',
+                            stepSize: 1,
+                            callback: function(value) {
+                                return value.toFixed(1) + '%';
+                            }
+                        },
+                        grid: { color: '#374151' }
+                    }
+                }
+            }
+        });
+        
+        // Simulate adding new data points
+        let counter = 0;
+        setInterval(() => {
+            counter++;
+            const newTime = new Date(Date.now() + counter * 5000).toLocaleTimeString();
+            
+            // Add new data
+            chart.data.labels.push(newTime);
+            chart.data.datasets[0].data.push(5.42 + Math.random() * 0.1 - 0.05);
+            chart.data.datasets[1].data.push(6.17 + Math.random() * 0.1 - 0.05);
+            
+            // Keep only last 10 points
+            if (chart.data.labels.length > 10) {
+                chart.data.labels.shift();
+                chart.data.datasets.forEach(dataset => dataset.data.shift());
+            }
+            
+            chart.update('none');
+        }, 2000);
+    </script>
+</body>
+</html>

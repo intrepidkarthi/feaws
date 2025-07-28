@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Treasury Demo - Arbitrage + Yield Strategy</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #f1f5f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .strategy-info {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .metric-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .metric-title {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #10b981;
+        }
+        
+        .metric-change {
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+        
+        .positive { color: #10b981; }
+        .negative { color: #ef4444; }
+        
+        .charts-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .chart-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #f1f5f9;
+        }
+        
+        .activity-log {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .log-entry {
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #10b981;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: pulse 2s infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #94a3b8;
+        }
+        
+        @media (max-width: 768px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏦 Live Treasury Management Demo</h1>
+            <p>Real-time Cross-DEX Arbitrage + Yield Farming Strategy</p>
+        </div>
+        
+        <div class="strategy-info">
+            <h3>📈 Active Strategy: Cross-DEX Arbitrage + Aave Yield Farming</h3>
+            <p>• Monitor price differences between QuickSwap, SushiSwap, and Uniswap</p>
+            <p>• Execute profitable arbitrage trades when spread > 0.5%</p>
+            <p>• Earn 3.5-5% APY on idle USDC via Aave lending</p>
+            <p>• Live portfolio value and profit tracking</p>
+        </div>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-title">Portfolio Value</div>
+                <div class="metric-value" id="portfolioValue">$50,000</div>
+                <div class="metric-change positive" id="portfolioChange">+0.00%</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-title">Total Profit</div>
+                <div class="metric-value" id="totalProfit">$0.00</div>
+                <div class="metric-change positive" id="profitRate">$0.00/hr</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-title">Arbitrage Executions</div>
+                <div class="metric-value" id="totalExecutions">0</div>
+                <div class="metric-change" id="lastExecution">Waiting for opportunities...</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-title">System Status</div>
+                <div class="metric-value">
+                    <span class="status-indicator"></span>
+                    <span id="systemStatus">ACTIVE</span>
+                </div>
+                <div class="metric-change" id="uptime">0 minutes</div>
+            </div>
+        </div>
+        
+        <div class="charts-section">
+            <div class="chart-card">
+                <div class="chart-title">Portfolio Growth</div>
+                <canvas id="portfolioChart" width="400" height="200"></canvas>
+            </div>
+            
+            <div class="chart-card">
+                <div class="chart-title">Profit Rate ($/hour)</div>
+                <canvas id="profitChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+        
+        <div class="activity-log">
+            <h3>📊 Live Activity Log</h3>
+            <div id="activityLog">
+                <div class="loading">Starting demo keeper system...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Demo data and charts
+        let portfolioChart, profitChart;
+        let portfolioHistory = [];
+        let profitHistory = [];
+        let startTime = Date.now();
+        let currentData = {
+            portfolioValue: 50000,
+            totalProfit: 0,
+            totalExecutions: 0,
+            profitRate: 0
+        };
+        
+        // Initialize charts
+        function initCharts() {
+            // Portfolio chart
+            const portfolioCtx = document.getElementById('portfolioChart').getContext('2d');
+            portfolioChart = new Chart(portfolioCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Portfolio Value ($)',
+                        data: [],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#f1f5f9' } }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148, 163, 184, 0.1)' } },
+                        y: { 
+                            ticks: { 
+                                color: '#94a3b8',
+                                callback: function(value) { return '$' + value.toLocaleString(); }
+                            }, 
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' } 
+                        }
+                    }
+                }
+            });
+            
+            // Profit rate chart
+            const profitCtx = document.getElementById('profitChart').getContext('2d');
+            profitChart = new Chart(profitCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Profit Rate ($/hr)',
+                        data: [],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#f1f5f9' } }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148, 163, 184, 0.1)' } },
+                        y: { 
+                            ticks: { 
+                                color: '#94a3b8',
+                                callback: function(value) { return '$' + value.toFixed(2); }
+                            }, 
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' } 
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Update dashboard with new data
+        function updateDashboard() {
+            // Simulate realistic demo data
+            const now = Date.now();
+            const uptimeMinutes = Math.floor((now - startTime) / 60000);
+            
+            // Simulate arbitrage opportunities (every 2-5 minutes)
+            if (Math.random() < 0.3 && uptimeMinutes > 0) {
+                const profit = 50 + Math.random() * 200; // $50-250 profit per trade
+                currentData.totalProfit += profit;
+                currentData.portfolioValue += profit;
+                currentData.totalExecutions++;
+                
+                addLogEntry(`🎯 Arbitrage executed: USDC/WETH on QuickSwap→SushiSwap | Profit: $${profit.toFixed(2)}`);
+            }
+            
+            // Simulate yield farming (continuous)
+            const yieldPerMinute = (currentData.portfolioValue * 0.04) / (365 * 24 * 60); // 4% APY
+            currentData.totalProfit += yieldPerMinute;
+            currentData.portfolioValue += yieldPerMinute;
+            
+            // Calculate profit rate
+            currentData.profitRate = uptimeMinutes > 0 ? (currentData.totalProfit / uptimeMinutes) * 60 : 0;
+            
+            // Update UI
+            document.getElementById('portfolioValue').textContent = '$' + currentData.portfolioValue.toLocaleString();
+            document.getElementById('totalProfit').textContent = '$' + currentData.totalProfit.toFixed(2);
+            document.getElementById('totalExecutions').textContent = currentData.totalExecutions;
+            document.getElementById('profitRate').textContent = '$' + currentData.profitRate.toFixed(2) + '/hr';
+            document.getElementById('uptime').textContent = uptimeMinutes + ' minutes';
+            
+            const portfolioChange = ((currentData.portfolioValue - 50000) / 50000 * 100);
+            document.getElementById('portfolioChange').textContent = '+' + portfolioChange.toFixed(3) + '%';
+            
+            // Update charts
+            const timeLabel = new Date().toLocaleTimeString();
+            
+            portfolioHistory.push(currentData.portfolioValue);
+            profitHistory.push(currentData.profitRate);
+            
+            portfolioChart.data.labels.push(timeLabel);
+            portfolioChart.data.datasets[0].data.push(currentData.portfolioValue);
+            
+            profitChart.data.labels.push(timeLabel);
+            profitChart.data.datasets[0].data.push(currentData.profitRate);
+            
+            // Keep only last 20 points
+            if (portfolioChart.data.labels.length > 20) {
+                portfolioChart.data.labels.shift();
+                portfolioChart.data.datasets[0].data.shift();
+                profitChart.data.labels.shift();
+                profitChart.data.datasets[0].data.shift();
+            }
+            
+            portfolioChart.update('none');
+            profitChart.update('none');
+        }
+        
+        // Add log entry
+        function addLogEntry(message) {
+            const logDiv = document.getElementById('activityLog');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logDiv.appendChild(entry);
+            
+            // Keep only last 10 entries
+            while (logDiv.children.length > 10) {
+                logDiv.removeChild(logDiv.firstChild);
+            }
+            
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            initCharts();
+            
+            // Add initial log entries
+            setTimeout(() => addLogEntry('🔗 Connected to Polygon mainnet'), 1000);
+            setTimeout(() => addLogEntry('📊 Monitoring QuickSwap, SushiSwap, Uniswap prices'), 2000);
+            setTimeout(() => addLogEntry('🌾 Started Aave USDC yield farming (4.2% APY)'), 3000);
+            setTimeout(() => addLogEntry('✅ Demo keeper system fully operational'), 4000);
+            
+            // Start updates
+            setTimeout(() => {
+                setInterval(updateDashboard, 5000); // Update every 5 seconds
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
