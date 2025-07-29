@@ -1,0 +1,28 @@
+{
+  "id": 1753725412816,
+  "type": "YIELD_TWAP",
+  "fromToken": "USDC",
+  "toToken": "WMATIC",
+  "totalAmount": 2,
+  "tranches": 3,
+  "intervalMinutes": 2,
+  "yieldTarget": 5,
+  "startTime": "2025-07-28T17:56:52.816Z",
+  "status": "COMPLETED",
+  "executedTranches": [
+    {
+      "tranche": 3,
+      "amountIn": 0.666666,
+      "amountOut": 2.9097401061161094,
+      "executionPrice": 4.364614523788688,
+      "marketPrice": 4.364571767588002,
+      "priceImprovement": 0.00097961960447358,
+      "transactionHash": "0xb6a09381c3a9a0f0f73701e4a10e557f236367897ff1ee99005773454d59962d",
+      "timestamp": "2025-07-28T18:01:32.678Z",
+      "gasUsed": "183384"
+    }
+  ],
+  "totalYieldGenerated": 0.00097961960447358,
+  "averageExecutionPrice": 4.364614523788688,
+  "endTime": "2025-07-28T18:01:32.678Z"
+}

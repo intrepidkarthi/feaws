@@ -1,0 +1,41 @@
+{
+  "summary": {
+    "totalTransactions": 1,
+    "totalDeployed": 8,
+    "averageAPY": 2.8,
+    "totalYieldGenerated": 0
+  },
+  "recentTransactions": [
+    {
+      "type": "YIELD_DEPLOYMENT",
+      "hash": "0x1950574004294ae585d78e2fc9f02141df62727cf671957fc402362a32facc36",
+      "amount": "3 USDC → Aave v3",
+      "apy": "2.8% APY",
+      "timestamp": "2025-07-29T03:20:48.301Z"
+    }
+  ],
+  "activePositions": [
+    {
+      "protocol": "Aave v3",
+      "amount": 5,
+      "apy": 2.8,
+      "transactionHash": "0x2d6af241a793961c879e2f6d2ac1888778361857f14508eda9cfbcc8a76d758c"
+    },
+    {
+      "protocol": "Aave v3 (Additional)",
+      "amount": 3,
+      "apy": 2.8,
+      "transactionHash": "0x1950574004294ae585d78e2fc9f02141df62727cf671957fc402362a32facc36"
+    }
+  ],
+  "optimizations": [
+    {
+      "protocol": "QuickSwap LP",
+      "targetAPY": 8.5,
+      "yieldImprovement": 5.7,
+      "additionalAnnualYield": 0.28500000000000003,
+      "recommendation": "HIGH_PRIORITY"
+    }
+  ],
+  "lastUpdated": "2025-07-29T03:21:26.605Z"
+}

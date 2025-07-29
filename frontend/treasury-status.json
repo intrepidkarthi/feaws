@@ -1,17 +1,16 @@
 {
   "wallet": "0x4D3e9A008CfA2eBa34d5D32F86141678427E7CF4",
-  "network": "Polygon (137)",
   "balances": {
     "USDC": {
       "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
-      "balance": "31.196202",
-      "balanceWei": "31196202",
+      "balance": "31.696202",
+      "balanceWei": "31696202",
       "decimals": 6
     },
     "WMATIC": {
       "address": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
-      "balance": "4.339100503666856681",
-      "balanceWei": "4339100503666856681",
+      "balance": "2.169497879499409306",
+      "balanceWei": "2169497879499409306",
       "decimals": 18
     },
     "WETH": {
@@ -27,14 +26,5 @@
       "decimals": 18
     }
   },
-  "contracts": {
-    "oneinchRouter": "0x111111125421ca6dc452d289314280a0f8842a65",
-    "tokens": {
-      "USDC": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
-      "WMATIC": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
-      "WETH": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619",
-      "DAI": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063"
-    }
-  },
-  "timestamp": "2025-07-28T17:31:14.163Z"
+  "timestamp": "2025-07-29T03:24:04.731Z"
 }

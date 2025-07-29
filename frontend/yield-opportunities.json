@@ -1,0 +1,37 @@
+{
+  "staking": {
+    "stMATIC": {
+      "protocol": "Lido",
+      "currentAPY": 4.2,
+      "risk": "Low",
+      "liquidity": "High",
+      "description": "Liquid staking MATIC for stMATIC"
+    }
+  },
+  "lending": {
+    "USDC_Aave": {
+      "protocol": "Aave v3",
+      "currentAPY": 2.8,
+      "risk": "Low",
+      "liquidity": "High",
+      "description": "Lend USDC on Aave v3"
+    }
+  },
+  "liquidity": {
+    "USDC_WMATIC": {
+      "protocol": "QuickSwap",
+      "currentAPY": 8.5,
+      "risk": "Medium",
+      "liquidity": "Medium",
+      "description": "USDC-WMATIC LP on QuickSwap"
+    }
+  },
+  "arbitrage": {
+    "WMATIC_stMATIC": {
+      "protocol": "1inch + Lido",
+      "potentialYield": 0.3,
+      "risk": "Low",
+      "description": "WMATIC → stMATIC arbitrage"
+    }
+  }
+}

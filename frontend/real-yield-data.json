@@ -1,0 +1,17 @@
+{
+  "execution": {
+    "timestamp": "2025-07-28T18:36:56.448Z",
+    "strategy": "aave_lending",
+    "status": "SUCCESS",
+    "transactionHash": "0x2d6af241a793961c879e2f6d2ac1888778361857f14508eda9cfbcc8a76d758c",
+    "blockNumber": 74523882,
+    "gasUsed": "201106",
+    "token": "USDC",
+    "amount": 5
+  },
+  "positions": {
+    "totalPositions": 0,
+    "positions": [],
+    "timestamp": "2025-07-28T18:35:52.361Z"
+  }
+}
