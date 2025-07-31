@@ -1,0 +1,32 @@
+{
+  "name": "feaws-twap-engine",
+  "version": "1.0.0",
+  "description": "Advanced TWAP Engine for 1inch Limit Order Protocol",
+  "main": "scripts/deploy.js",
+  "scripts": {
+    "test": "forge test",
+    "deploy:polygon": "node scripts/deploy.js",
+    "build-orders": "node scripts/build-orders.js",
+    "taker-bot": "node scripts/taker-bot.js",
+    "monitor": "node scripts/monitor.js"
+  },
+  "keywords": [
+    "ethereum",
+    "defi",
+    "1inch",
+    "twap",
+    "limit-orders",
+    "polygon",
+    "ethglobal"
+  ],
+  "author": "ETHGlobal UNITE Team",
+  "license": "MIT",
+  "dependencies": {
+    "ethers": "^6.13.4",
+    "dotenv": "^16.4.5",
+    "axios": "^1.7.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  }
+}
