@@ -87,12 +87,28 @@ async function main() {
     console.log(`⏰ Current time: ${new Date(currentTime * 1000).toISOString()}`);
     console.log(`⏰ First slice available: ${new Date(startTime * 1000).toISOString()}`);
 
+    // Get real USDC/WMATIC rate from 1inch
+    let wmaticPerUsdc = 4.67; // Fallback rate
+    try {
+        const axios = require('axios');
+        const response = await axios.get('https://api.1inch.dev/swap/v6.0/137/quote', {
+            params: {
+                src: TOKENS.USDC,
+                dst: TOKENS.WMATIC,
+                amount: ethers.parseUnits(USDC_PER_SLICE.toString(), usdcDecimals).toString()
+            },
+            headers: { 'Authorization': `Bearer ${process.env.ONEINCH_API_KEY}` }
+        });
+        wmaticPerUsdc = parseFloat(response.data.dstAmount) / 1e18 / USDC_PER_SLICE;
+        console.log(`💱 Real rate: 1 USDC = ${wmaticPerUsdc.toFixed(4)} WMATIC`);
+    } catch (error) {
+        console.log(`⚠️  Using fallback rate: 1 USDC = ${wmaticPerUsdc} WMATIC`);
+    }
+
     // Generate orders
     const orders = [];
     const makingAmount = ethers.parseUnits(USDC_PER_SLICE.toString(), usdcDecimals); // 0.2 USDC
-    
-    // Get current WMATIC price (simplified - using 1 USDC = 1.2 WMATIC for demo)
-    const takingAmount = ethers.parseEther((USDC_PER_SLICE * 1.2).toString()); // 0.24 WMATIC per slice
+    const takingAmount = ethers.parseEther((USDC_PER_SLICE * wmaticPerUsdc * 0.99).toString()); // 99% of market rate for better fills
 
     console.log(`\n📋 Generating ${SLICE_COUNT} orders:`);
     console.log(`   Making: ${USDC_PER_SLICE} USDC per slice`);
