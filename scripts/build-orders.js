@@ -120,7 +120,7 @@ async function main() {
         
         // Build the order struct (simplified version for demo)
         const order = {
-            salt: ethers.randomBytes(32),
+            salt: ethers.hexlify(ethers.randomBytes(32)),
             maker: makerWallet.address,
             receiver: makerWallet.address,
             makerAsset: TOKENS.USDC,

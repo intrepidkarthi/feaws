@@ -95,13 +95,51 @@ async function main() {
                     order.order.interaction
                 ];
 
-                // For demo, we'll use a simple signature (in real implementation, this would be the maker's EIP-712 signature)
-                const demoSignature = '0x' + '00'.repeat(65); // Placeholder signature
+                // Generate proper EIP-712 signature for the order
+                const makerWallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+                
+                // 1inch LOP domain
+                const domain = {
+                    name: 'Limit Order Protocol',
+                    version: '4',
+                    chainId: 137,
+                    verifyingContract: '0x94Bc2a1C732BcAd7343B25af48385Fe76E08734f'
+                };
+                
+                // Order type for EIP-712
+                const types = {
+                    Order: [
+                        { name: 'salt', type: 'uint256' },
+                        { name: 'maker', type: 'address' },
+                        { name: 'receiver', type: 'address' },
+                        { name: 'makerAsset', type: 'address' },
+                        { name: 'takerAsset', type: 'address' },
+                        { name: 'makingAmount', type: 'uint256' },
+                        { name: 'takingAmount', type: 'uint256' },
+                        { name: 'predicate', type: 'bytes' },
+                        { name: 'permit', type: 'bytes' },
+                        { name: 'interaction', type: 'bytes' }
+                    ]
+                };
+                
+                // Sign the order
+                const signature = await makerWallet.signTypedData(domain, types, {
+                    salt: order.order.salt,
+                    maker: order.order.maker,
+                    receiver: order.order.receiver,
+                    makerAsset: order.order.makerAsset,
+                    takerAsset: order.order.takerAsset,
+                    makingAmount: order.order.makingAmount,
+                    takingAmount: order.order.takingAmount,
+                    predicate: order.order.predicate,
+                    permit: order.order.permit,
+                    interaction: order.order.interaction
+                });
                 
                 // Call fillOrder on 1inch LOP
                 const tx = await lopContract.fillOrder(
                     lopOrder,
-                    demoSignature,
+                    signature,
                     order.order.interaction,
                     order.order.makingAmount,
                     order.order.takingAmount,
