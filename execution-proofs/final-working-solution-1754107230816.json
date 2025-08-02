@@ -1,0 +1,108 @@
+{
+  "timestamp": 1754107230816,
+  "success": true,
+  "orderHash": "0x6b8599fbaecc287c305f2e8ddd79074e7ae490482e98f0de9756b065b5f2914f",
+  "signature": "0x60e0fb853c6151e85009593a147a31e2d203eececf86bdbbbabd1fb1e508ea526e2326eb697ac009d74283e6adb16f571ca1de1ea1c5d70cac9529559b3bacfe1c",
+  "order": {
+    "salt": "653063908203",
+    "maker": "0x5756cb1c9223e109fcd0d0f0b48923b1d8b4c654",
+    "receiver": "0x0000000000000000000000000000000000000000",
+    "makerAsset": "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
+    "takerAsset": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+    "makingAmount": "50000",
+    "takingAmount": "250000000000000000",
+    "makerTraits": "[object Object]"
+  },
+  "typedData": {
+    "primaryType": "Order",
+    "types": {
+      "EIP712Domain": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "version",
+          "type": "string"
+        },
+        {
+          "name": "chainId",
+          "type": "uint256"
+        },
+        {
+          "name": "verifyingContract",
+          "type": "address"
+        }
+      ],
+      "Order": [
+        {
+          "name": "salt",
+          "type": "uint256"
+        },
+        {
+          "name": "maker",
+          "type": "address"
+        },
+        {
+          "name": "receiver",
+          "type": "address"
+        },
+        {
+          "name": "makerAsset",
+          "type": "address"
+        },
+        {
+          "name": "takerAsset",
+          "type": "address"
+        },
+        {
+          "name": "makingAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "takingAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "makerTraits",
+          "type": "uint256"
+        }
+      ]
+    },
+    "domain": {
+      "name": "1inch Aggregation Router",
+      "version": "6",
+      "chainId": 137,
+      "verifyingContract": "0x111111125421ca6dc452d289314280a0f8842a65"
+    },
+    "message": {
+      "maker": "0x5756cb1c9223e109fcd0d0f0b48923b1d8b4c654",
+      "makerAsset": "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
+      "takerAsset": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+      "makerTraits": "219749828362577798864447346033688343275586453504",
+      "salt": "653063908203",
+      "makingAmount": "50000",
+      "takingAmount": "250000000000000000",
+      "receiver": "0x0000000000000000000000000000000000000000"
+    }
+  },
+  "expiration": "1754110830",
+  "expirationDate": "2025-08-02T05:00:30.000Z",
+  "balances": {
+    "makerUSDC": "3779666",
+    "takerWMATIC": "500000000000000000"
+  },
+  "allowances": {
+    "usdcAllowance": "500000",
+    "wmaticAllowance": "250000000000000000"
+  },
+  "addresses": {
+    "maker": "0x5756CB1C9223E109FCd0D0f0b48923b1D8B4C654",
+    "taker": "0xD9E3dDdBaB1C375DF0D669737d70F8292802AB65",
+    "lopContract": "0x111111125421ca6dc452d289314280a0f8842a65"
+  },
+  "urls": {
+    "oneInchApp": "https://app.1inch.io/#/137/limit-order/0x6b8599fbaecc287c305f2e8ddd79074e7ae490482e98f0de9756b065b5f2914f",
+    "polygonscan": "https://polygonscan.com/address/0x111111125421ca6dc452d289314280a0f8842a65"
+  }
+}

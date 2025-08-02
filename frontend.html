@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEAWS Treasury System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .status-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .balance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .balance-item {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .balance-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+        
+        .balance-item .amount {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .strategies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .strategy-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .strategy-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .strategy-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+        
+        .strategy-card p {
+            margin-bottom: 20px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+        }
+        
+        .btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .output-section {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .output-section h4 {
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+        
+        .output-content {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #ffd700;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #ffd700;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .wallet-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌊 FEAWS</h1>
+            <p>Five Elements Advanced Wealth System</p>
+            <p>Real Treasury Management on Polygon Mainnet</p>
+        </div>
+        
+        <div class="status-card">
+            <div class="wallet-info" id="walletInfo">
+                <div class="loading"></div> Loading wallet information...
+            </div>
+            
+            <div class="balance-grid" id="balanceGrid">
+                <div class="balance-item">
+                    <h3>USDC</h3>
+                    <div class="amount" id="usdcBalance"><div class="loading"></div></div>
+                </div>
+                <div class="balance-item">
+                    <h3>WPOL</h3>
+                    <div class="amount" id="wpolBalance"><div class="loading"></div></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="strategies-grid">
+            <div class="strategy-card">
+                <h3>🌊 Water TWAP</h3>
+                <p>Time-weighted average price execution using 1inch Aggregator API. Splits large orders into smaller slices executed over time.</p>
+                <button class="btn" onclick="executeStrategy('twap')">Execute TWAP</button>
+            </div>
+            
+            <div class="strategy-card">
+                <h3>🎯 LOP TWAP</h3>
+                <p>Limit Order Protocol TWAP using 1inch v4. Creates and manages limit orders for optimal price execution.</p>
+                <button class="btn" onclick="executeStrategy('lop-twap')">Execute LOP TWAP</button>
+            </div>
+            
+            <div class="strategy-card">
+                <h3>🔥 Fusion Integration</h3>
+                <p>Advanced 1inch Fusion protocol integration for gasless swaps and MEV protection.</p>
+                <button class="btn" onclick="executeStrategy('fusion')">Execute Fusion</button>
+            </div>
+            
+            <div class="strategy-card">
+                <h3>🎯 Live Demo</h3>
+                <p>ETHGlobal UNITE 2025 demonstration script showcasing all FEAWS capabilities with real transactions.</p>
+                <button class="btn" onclick="executeStrategy('demo')">Run Demo</button>
+            </div>
+        </div>
+        
+        <div class="output-section" id="outputSection" style="display: none;">
+            <h4>Execution Output</h4>
+            <div class="output-content" id="outputContent"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3001';
+        
+        // Load initial data
+        async function loadData() {
+            try {
+                // Load health status
+                const healthResponse = await fetch(`${API_BASE}/health`);
+                const health = await healthResponse.json();
+                
+                document.getElementById('walletInfo').innerHTML = `
+                    <strong>Wallet:</strong> ${health.wallet}<br>
+                    <strong>Network:</strong> ${health.network}<br>
+                    <strong>Status:</strong> <span style="color: #4ade80;">${health.status}</span>
+                `;
+                
+                // Load balances
+                const balanceResponse = await fetch(`${API_BASE}/api/balances`);
+                const balanceData = await balanceResponse.json();
+                
+                if (balanceData.success) {
+                    document.getElementById('usdcBalance').textContent = 
+                        parseFloat(balanceData.balances.USDC.formatted).toFixed(4);
+                    document.getElementById('wpolBalance').textContent = 
+                        parseFloat(balanceData.balances.WPOL.formatted).toFixed(4);
+                } else {
+                    document.getElementById('usdcBalance').textContent = 'Error';
+                    document.getElementById('wpolBalance').textContent = 'Error';
+                }
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('walletInfo').innerHTML = 
+                    '<span style="color: #ef4444;">❌ Connection Error</span>';
+            }
+        }
+        
+        // Execute strategy
+        async function executeStrategy(strategy) {
+            const outputSection = document.getElementById('outputSection');
+            const outputContent = document.getElementById('outputContent');
+            
+            // Show output section
+            outputSection.style.display = 'block';
+            outputContent.textContent = `🚀 Executing ${strategy.toUpperCase()}...\n\n`;
+            
+            // Disable all buttons
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.innerHTML = '<div class="loading"></div> Executing...';
+            });
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/execute/${strategy}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        amount: '0.1',
+                        slices: 2
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    outputContent.textContent += `✅ ${result.message}\n\n`;
+                    outputContent.textContent += `📊 Output:\n${result.output}\n`;
+                    
+                    if (result.proof) {
+                        outputContent.textContent += `\n🔗 Proof Data:\n${JSON.stringify(result.proof, null, 2)}`;
+                    }
+                } else {
+                    outputContent.textContent += `❌ ${result.message}\n\n`;
+                    outputContent.textContent += `Error: ${result.error}\n`;
+                    if (result.output) {
+                        outputContent.textContent += `\nOutput: ${result.output}`;
+                    }
+                }
+                
+                // Reload balances after execution
+                setTimeout(loadData, 2000);
+                
+            } catch (error) {
+                outputContent.textContent += `❌ Network Error: ${error.message}`;
+            }
+            
+            // Re-enable buttons
+            buttons.forEach((btn, index) => {
+                btn.disabled = false;
+                const strategies = ['Execute TWAP', 'Execute LOP TWAP', 'Execute Fusion', 'Run Demo'];
+                btn.textContent = strategies[index];
+            });
+        }
+        
+        // Load data on page load
+        loadData();
+        
+        // Refresh data every 30 seconds
+        setInterval(loadData, 30000);
+    </script>
+</body>
+</html>

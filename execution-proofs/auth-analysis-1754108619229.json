@@ -1,0 +1,19 @@
+[
+  {
+    "step": "js_files",
+    "count": 2,
+    "files": [
+      "https://app.1inch.io/assets/splash-screen/lottie/stripes.json",
+      "https://app.1inch.io/assets/splash-screen/lottie/unicorn-logo-new.json"
+    ]
+  },
+  {
+    "step": "token_analysis",
+    "original": "1inch-v2:production.a9fa089671657f45d864d999f16c11f1d4723aa7f9930379d81591d0",
+    "parts": {
+      "app": "1inch-v2",
+      "env": "production",
+      "hash": "a9fa089671657f45d864d999f16c11f1d4723aa7f9930379d81591d0"
+    }
+  }
+]

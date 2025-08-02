@@ -1,0 +1,22 @@
+{
+  "timestamp": "2025-08-02T02:57:01.417Z",
+  "protocol": "1inch Limit Order Protocol v4 (Official SDK)",
+  "chain": "Polygon",
+  "chainId": 137,
+  "maker": "0x5756CB1C9223E109FCd0D0f0b48923b1D8B4C654",
+  "taker": "0xD9E3dDdBaB1C375DF0D669737d70F8292802AB65",
+  "orders": [
+    {
+      "order": {
+        "salt": "64122342140129988140934635549",
+        "makingAmount": "50000",
+        "takingAmount": "250000000000000000",
+        "makerTraits": "[object Object]"
+      },
+      "signature": "0x33ab3aa890cec56907b1caa30cff96b386ae0e94a3752f32fd3f845bcf4cb8b229e465e5fa85b893835b465304dda3042863d42e8bb4dd8df30b2c904dab711a1b",
+      "orderHash": "0x86f1858161127bf32d7f3bae37da6e96e2ab5606e4a5cf270252154de9cea4ac",
+      "timestamp": "2025-08-02T02:56:39.563Z"
+    }
+  ],
+  "fills": []
+}

@@ -1,0 +1,117 @@
+{
+  "timestamp": 1754109969700,
+  "type": "build-success",
+  "success": false,
+  "buildWorking": true,
+  "orderHash": "0x3ae0df8fa4d30c75d9a04a9ac32795a915620bad12d6c27c49ad932c69d72689",
+  "signature": "0x5babf26d045e4b22141d2726ec38f1a42dcfb19824909c53d0522aea5832fde34148515c35a2ca3f9146632bf4995c129ccc65b0a0bbd85f01453ad204f33fe91c",
+  "buildResponse": {
+    "typedData": {
+      "primaryType": "Order",
+      "types": {
+        "EIP712Domain": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "type": "string"
+          },
+          {
+            "name": "chainId",
+            "type": "uint256"
+          },
+          {
+            "name": "verifyingContract",
+            "type": "address"
+          }
+        ],
+        "Order": [
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "maker",
+            "type": "address"
+          },
+          {
+            "name": "receiver",
+            "type": "address"
+          },
+          {
+            "name": "makerAsset",
+            "type": "address"
+          },
+          {
+            "name": "takerAsset",
+            "type": "address"
+          },
+          {
+            "name": "makingAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takingAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerTraits",
+            "type": "uint256"
+          }
+        ]
+      },
+      "domain": {
+        "name": "1inch Aggregation Router",
+        "version": "6",
+        "chainId": 137,
+        "verifyingContract": "0x111111125421ca6dc452d289314280a0f8842a65"
+      },
+      "message": {
+        "maker": "0x5756cb1c9223e109fcd0d0f0b48923b1d8b4c654",
+        "makerAsset": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+        "takerAsset": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+        "makerTraits": "35280402189494778293119284494834596924043200573405542247313799268156766683136",
+        "salt": "102412815617919764945097423141565579961314814957540813662310345113113297112006",
+        "makingAmount": "100000000000000000",
+        "takingAmount": "200000",
+        "receiver": "0xc0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e"
+      }
+    },
+    "orderHash": "0x3ae0df8fa4d30c75d9a04a9ac32795a915620bad12d6c27c49ad932c69d72689",
+    "extension": "0x000000980000004a0000004a0000004a0000004a000000250000000000000000c0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e00000001f43201555d67e125f8769284bac0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e00000001f43201555d67e125f8769284bac0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e00000000000000000000000000000000000000000090cbe4bdd538d6e9b379bff5fe72c3d67a521de500000001f43201555d67e125f8769284ba"
+  },
+  "submissionErrors": [
+    {
+      "format": "format1",
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/orders",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "format": "format2",
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/orders",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    }
+  ],
+  "note": "Order building and signing successful! Submission format needs refinement.",
+  "viewUrl": "https://app.1inch.io/#/137/limit-order/0x3ae0df8fa4d30c75d9a04a9ac32795a915620bad12d6c27c49ad932c69d72689",
+  "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/build",
+  "authHeaders": {
+    "accept": "application/json, text/plain, */*",
+    "authorization": "Bearer eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImJjZjAyYTg0LTQwZTQtNDczOS04OTQwLWMzYjNiYjQ1YzRkMCIsImV4cCI6MTc1NDExMjk0MSwiZGV2aWNlIjoiYnJvd3NlciIsImlhdCI6MTc1NDEwOTM0MX0.SpmFemNXbI0CRVhfjcPUqZDVT57fWkGcazPagAWKRs5FdzhtZBQzLdzEzBZ5tReQ2Hcgjh4O1CEu2qp2jyWYmQ",
+    "referer": "https://app.1inch.io/",
+    "sec-ch-ua": "\"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"138\", \"Brave\";v=\"138\"",
+    "sec-ch-ua-mobile": "?0",
+    "sec-ch-ua-platform": "\"macOS\"",
+    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36",
+    "x-session-id": "5f7137d6-d217-46d6-8cc2-c823057b0b9d",
+    "x-user-id": "4d244981-3a27-4a92-890c-594dceee7804"
+  }
+}

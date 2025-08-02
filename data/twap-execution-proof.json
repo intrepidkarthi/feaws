@@ -1,0 +1,42 @@
+{
+  "timestamp": "2025-08-02T01:27:10.326Z",
+  "wallet": "0x5756CB1C9223E109FCd0D0f0b48923b1D8B4C654",
+  "strategy": "Time-Weighted Average Price (TWAP)",
+  "protocol": "1inch Aggregator API",
+  "network": "Polygon Mainnet",
+  "chainId": 137,
+  "totalExecutionTime": 408865,
+  "slicesExecuted": 2,
+  "totalUSDCProcessed": "0.0",
+  "totalWPOLReceived": "0.0",
+  "swaps": [
+    {
+      "slice": 1,
+      "hash": "0xb24abd32a7c0879df73ef89e36631952851ae21f7d25f0437c40e7bc440cb77e",
+      "inputAmount": "0.1",
+      "expectedOutput": "0.503156284438971956",
+      "timestamp": "2025-08-02T01:20:44.006Z",
+      "polygonscan": "https://polygonscan.com/tx/0xb24abd32a7c0879df73ef89e36631952851ae21f7d25f0437c40e7bc440cb77e",
+      "executionTime": 29222
+    },
+    {
+      "slice": 2,
+      "hash": "0xe9995405bb4e0997ac6a8ef5229fa8d884eafd269e2d9f3bb54d4bc6ce22d2d3",
+      "inputAmount": "0.1",
+      "expectedOutput": "0.502903100954738353",
+      "timestamp": "2025-08-02T01:22:01.137Z",
+      "polygonscan": "https://polygonscan.com/tx/0xe9995405bb4e0997ac6a8ef5229fa8d884eafd269e2d9f3bb54d4bc6ce22d2d3",
+      "executionTime": 15175
+    }
+  ],
+  "balanceChanges": {
+    "initial": {
+      "usdc": "3.979666",
+      "wpol": "1.484204331101400383"
+    },
+    "final": {
+      "usdc": "3.979666",
+      "wpol": "1.484204331101400383"
+    }
+  }
+}

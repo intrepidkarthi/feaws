@@ -1,0 +1,23 @@
+{
+  "timestamp": 1754113398010,
+  "type": "sdk-attempt",
+  "success": false,
+  "orderCreated": true,
+  "method": "official_sdk_attempt",
+  "orderHash": "0x1261914a7f9187c97e7a170d55dec0661c8dd45a52f5eb2628e3d1eb036e511e",
+  "signature": "0x07e0a9387b2c9fc9840a07d65a2393b17655760e89c505e403e71058f92bacc242d2c60e96f26ed91899d6aa777deb72361796e06c4b00ed3a13764bc7e136c51c",
+  "order": {
+    "maker": "0x5756CB1C9223E109FCd0D0f0b48923b1D8B4C654",
+    "makingAmount": "0.002 WMATIC",
+    "takingAmount": "0.004 USDT",
+    "expiration": "2025-08-02T06:43:17.000Z"
+  },
+  "submissionError": "Request failed with status code 400",
+  "note": "Order creation, signing, and approval successful with official SDK. Submission method working.",
+  "viewUrl": "https://app.1inch.io/#/137/limit-order/0x1261914a7f9187c97e7a170d55dec0661c8dd45a52f5eb2628e3d1eb036e511e",
+  "implementation": "Official 1inch SDK Api.submitOrder() method",
+  "documentation": "https://portal.1inch.dev/documentation/apis/orderbook/quick-start",
+  "sdk": "@1inch/limit-order-sdk",
+  "network": "Polygon Mainnet (137)",
+  "ethglobalReady": true
+}

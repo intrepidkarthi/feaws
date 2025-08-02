@@ -1,0 +1,13 @@
+{
+  "timestamp": 1754105157358,
+  "orderHash": "0xf158a4248780979f9ebd1cff812381008352a3dd7f3855cc0917e8b96f2e17ef",
+  "signature": "0x65b3c66631c9461b3506d50a52ae1424a172db272dee258a4b48fdc33e94c9a869e0760e1f6c60291d721fe4f86a6d78616359a02b173dcf9c515a76eeb131b01c",
+  "submissionMethod": "API_ORDERBOOK",
+  "status": "FAILED",
+  "error": "Request failed with status code 404",
+  "errorResponse": {
+    "message": "Cannot POST /v4.0/137/limit-order/order",
+    "error": "Not Found",
+    "statusCode": 404
+  }
+}

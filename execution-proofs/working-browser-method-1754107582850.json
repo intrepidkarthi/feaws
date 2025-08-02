@@ -1,0 +1,90 @@
+{
+  "endpoint": "API Dev Build",
+  "url": "https://api.1inch.dev/orderbook/v4.0/137/build",
+  "method": "GET",
+  "authMethod": "Bearer + Session",
+  "headers": {
+    "authorization": "Bearer VCCbAAZbdHwOZSfwbUmT3BvnWyeYonHC",
+    "x-session-id": "272640013",
+    "x-app-name": "1inch-v2",
+    "x-environment": "production"
+  },
+  "response": {
+    "typedData": {
+      "primaryType": "Order",
+      "types": {
+        "EIP712Domain": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "type": "string"
+          },
+          {
+            "name": "chainId",
+            "type": "uint256"
+          },
+          {
+            "name": "verifyingContract",
+            "type": "address"
+          }
+        ],
+        "Order": [
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "maker",
+            "type": "address"
+          },
+          {
+            "name": "receiver",
+            "type": "address"
+          },
+          {
+            "name": "makerAsset",
+            "type": "address"
+          },
+          {
+            "name": "takerAsset",
+            "type": "address"
+          },
+          {
+            "name": "makingAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takingAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerTraits",
+            "type": "uint256"
+          }
+        ]
+      },
+      "domain": {
+        "name": "1inch Aggregation Router",
+        "version": "6",
+        "chainId": 137,
+        "verifyingContract": "0x111111125421ca6dc452d289314280a0f8842a65"
+      },
+      "message": {
+        "maker": "0x5756cb1c9223e109fcd0d0f0b48923b1d8b4c654",
+        "makerAsset": "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
+        "takerAsset": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+        "makerTraits": "35280402189494778293119284494834596924043200573402652914604920304429218922496",
+        "salt": "102412815600752854036212502533708994413288394087029246539123852061973504019398",
+        "makingAmount": "50000",
+        "takingAmount": "250000000000000000",
+        "receiver": "0xc0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e"
+      }
+    },
+    "orderHash": "0x87bb27b5637cb64f126641e8e50b18e0f816538e62fcff1776c54b260b92d5fd",
+    "extension": "0x000000980000004a0000004a0000004a0000004a000000250000000000000000c0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e00000001f43201555d67e125f8769284bac0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e00000001f43201555d67e125f8769284bac0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e00000000000000000000000000000000000000000090cbe4bdd538d6e9b379bff5fe72c3d67a521de500000001f43201555d67e125f8769284ba"
+  },
+  "timestamp": 1754107582850
+}

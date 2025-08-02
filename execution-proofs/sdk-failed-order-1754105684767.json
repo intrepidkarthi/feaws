@@ -1,0 +1,8 @@
+{
+  "timestamp": 1754105684766,
+  "orderHash": "0xd01ce7289f1b7c0012571a8753aa3d3c534f153c0b84067d108d204ab028cacb",
+  "signature": "0x39e90ac230451ae34b38ffa26132ff6c296d00e678c1b878849707ae585a61df07b0e0065e38ab6cdda94246905bd003569fc46c62a6403e12980ab71c44c34b1b",
+  "submissionMethod": "OFFICIAL_SDK",
+  "status": "FAILED",
+  "error": "Request failed with status code 400"
+}

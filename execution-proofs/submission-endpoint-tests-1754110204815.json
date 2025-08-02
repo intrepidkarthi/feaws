@@ -1,0 +1,421 @@
+{
+  "timestamp": 1754110204815,
+  "type": "endpoint-tests",
+  "success": false,
+  "buildWorking": true,
+  "orderHash": "0x1b67045b029cc5194a98b0edd89e707f501b8f1058c6e7797c24fd17b98606b7",
+  "signature": "0x2a5c28501f63e82d80b4b5abeb929812e481834d03111baecbc11b4c9603b8cc0e908828c1f0fed7cbbf9188d0537cd2f5627b67e958f2065528dcc20b09b3191b",
+  "buildResponse": {
+    "typedData": {
+      "primaryType": "Order",
+      "types": {
+        "EIP712Domain": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "type": "string"
+          },
+          {
+            "name": "chainId",
+            "type": "uint256"
+          },
+          {
+            "name": "verifyingContract",
+            "type": "address"
+          }
+        ],
+        "Order": [
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "maker",
+            "type": "address"
+          },
+          {
+            "name": "receiver",
+            "type": "address"
+          },
+          {
+            "name": "makerAsset",
+            "type": "address"
+          },
+          {
+            "name": "takerAsset",
+            "type": "address"
+          },
+          {
+            "name": "makingAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takingAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerTraits",
+            "type": "uint256"
+          }
+        ]
+      },
+      "domain": {
+        "name": "1inch Aggregation Router",
+        "version": "6",
+        "chainId": 137,
+        "verifyingContract": "0x111111125421ca6dc452d289314280a0f8842a65"
+      },
+      "message": {
+        "maker": "0x5756cb1c9223e109fcd0d0f0b48923b1d8b4c654",
+        "makerAsset": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+        "takerAsset": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+        "makerTraits": "35280402189494778293119284494834596924043200573405815464549032174350250278912",
+        "salt": "102412815607301816005109088960436219994089673285182149548001514376839051561926",
+        "makingAmount": "10000000000000000",
+        "takingAmount": "20000",
+        "receiver": "0xc0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e"
+      }
+    },
+    "orderHash": "0x1b67045b029cc5194a98b0edd89e707f501b8f1058c6e7797c24fd17b98606b7",
+    "extension": "0x000000980000004a0000004a0000004a0000004a000000250000000000000000c0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e00000001f43201555d67e125f8769284bac0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e00000001f43201555d67e125f8769284bac0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e00000000000000000000000000000000000000000090cbe4bdd538d6e9b379bff5fe72c3d67a521de500000001f43201555d67e125f8769284ba"
+  },
+  "submissionTests": [
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/orders",
+      "format": "Format 1: Order object wrapper",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/orders",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/orders",
+      "format": "Format 2: Flat structure",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/orders",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/orders",
+      "format": "Format 3: Signature split",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/orders",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/orders",
+      "format": "Format 4: Simple structure",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/orders",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/order",
+      "format": "Format 1: Order object wrapper",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/order",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/order",
+      "format": "Format 2: Flat structure",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/order",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/order",
+      "format": "Format 3: Signature split",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/order",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/order",
+      "format": "Format 4: Simple structure",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/order",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/submit",
+      "format": "Format 1: Order object wrapper",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/submit",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/submit",
+      "format": "Format 2: Flat structure",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/submit",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/submit",
+      "format": "Format 3: Signature split",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/submit",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/submit",
+      "format": "Format 4: Simple structure",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/submit",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/create",
+      "format": "Format 1: Order object wrapper",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/create",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/create",
+      "format": "Format 2: Flat structure",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/create",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/create",
+      "format": "Format 3: Signature split",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/create",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/create",
+      "format": "Format 4: Simple structure",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/create",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/place",
+      "format": "Format 1: Order object wrapper",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/place",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/place",
+      "format": "Format 2: Flat structure",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/place",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/place",
+      "format": "Format 3: Signature split",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/place",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/orderbook/v4.0/137/place",
+      "format": "Format 4: Simple structure",
+      "status": 404,
+      "success": false,
+      "error": {
+        "message": "Cannot POST /v4.0/137/limit-order/place",
+        "error": "Not Found",
+        "statusCode": 404
+      }
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/limit-order/v4.0/137/orders",
+      "format": "Format 1: Order object wrapper",
+      "status": 404,
+      "success": false,
+      "error": "No proxy config found"
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/limit-order/v4.0/137/orders",
+      "format": "Format 2: Flat structure",
+      "status": 404,
+      "success": false,
+      "error": "No proxy config found"
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/limit-order/v4.0/137/orders",
+      "format": "Format 3: Signature split",
+      "status": 404,
+      "success": false,
+      "error": "No proxy config found"
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/limit-order/v4.0/137/orders",
+      "format": "Format 4: Simple structure",
+      "status": 404,
+      "success": false,
+      "error": "No proxy config found"
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/limit-order/v4.0/137/submit",
+      "format": "Format 1: Order object wrapper",
+      "status": 404,
+      "success": false,
+      "error": "No proxy config found"
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/limit-order/v4.0/137/submit",
+      "format": "Format 2: Flat structure",
+      "status": 404,
+      "success": false,
+      "error": "No proxy config found"
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/limit-order/v4.0/137/submit",
+      "format": "Format 3: Signature split",
+      "status": 404,
+      "success": false,
+      "error": "No proxy config found"
+    },
+    {
+      "endpoint": "https://proxy-app.1inch.io/v2.0/limit-order/v4.0/137/submit",
+      "format": "Format 4: Simple structure",
+      "status": 404,
+      "success": false,
+      "error": "No proxy config found"
+    },
+    {
+      "endpoint": "https://api.1inch.dev/orderbook/v4.0/137/orders",
+      "format": "Format 1: Order object wrapper",
+      "status": 401,
+      "success": false,
+      "error": "Invalid API key"
+    },
+    {
+      "endpoint": "https://api.1inch.dev/orderbook/v4.0/137/orders",
+      "format": "Format 2: Flat structure",
+      "status": 401,
+      "success": false,
+      "error": "Invalid API key"
+    },
+    {
+      "endpoint": "https://api.1inch.dev/orderbook/v4.0/137/orders",
+      "format": "Format 3: Signature split",
+      "status": 401,
+      "success": false,
+      "error": "Invalid API key"
+    },
+    {
+      "endpoint": "https://api.1inch.dev/orderbook/v4.0/137/orders",
+      "format": "Format 4: Simple structure",
+      "status": 401,
+      "success": false,
+      "error": "Invalid API key"
+    },
+    {
+      "endpoint": "https://api.1inch.dev/orderbook/v4.0/137/order",
+      "format": "Format 1: Order object wrapper",
+      "status": 401,
+      "success": false,
+      "error": "Invalid API key"
+    },
+    {
+      "endpoint": "https://api.1inch.dev/orderbook/v4.0/137/order",
+      "format": "Format 2: Flat structure",
+      "status": 401,
+      "success": false,
+      "error": "Invalid API key"
+    },
+    {
+      "endpoint": "https://api.1inch.dev/orderbook/v4.0/137/order",
+      "format": "Format 3: Signature split",
+      "status": 401,
+      "success": false,
+      "error": "Invalid API key"
+    },
+    {
+      "endpoint": "https://api.1inch.dev/orderbook/v4.0/137/order",
+      "format": "Format 4: Simple structure",
+      "status": 401,
+      "success": false,
+      "error": "Invalid API key"
+    }
+  ],
+  "note": "Build and signing working perfectly. Need to find correct submission endpoint.",
+  "instructions": "Please capture the exact POST request when placing a limit order in the browser."
+}

@@ -1,0 +1,32 @@
+{
+  "timestamp": "2025-08-02T02:45:49.832Z",
+  "protocol": "1inch Limit Order Protocol v4 (FIXED)",
+  "chain": "Polygon",
+  "chainId": 137,
+  "domain": {
+    "name": "1inch Aggregation Router",
+    "version": "6",
+    "chainId": 137,
+    "verifyingContract": "0x111111125421cA6dc452d289314280a0f8842A65"
+  },
+  "maker": "0x5756CB1C9223E109FCd0D0f0b48923b1D8B4C654",
+  "taker": "0xD9E3dDdBaB1C375DF0D669737d70F8292802AB65",
+  "orders": [
+    {
+      "order": {
+        "salt": "734814",
+        "maker": "498617754664951675422905217169053696425389770324",
+        "receiver": "498617754664951675422905217169053696425389770324",
+        "makerAsset": "344181018808976184653167882984224724912449532761",
+        "takerAsset": "76001907929418866304487584807096610665432814192",
+        "makingAmount": "50000",
+        "takingAmount": "250000000000000000",
+        "makerTraits": "0"
+      },
+      "signature": "0xc9120f4abf12d115d4b14fd388d6a854adc04fe4a17bce77961416a3319afb1408c966323372bf21c0883bdfe0f9b5afc17528ecd29cf0494873dba3dd4a769b1c",
+      "orderHash": "0x3cf1e76596cea9f4e79d2c119fbf34e6b3bb99c75cb12ee228393328d6f73ba3",
+      "timestamp": "2025-08-02T02:45:19.618Z"
+    }
+  ],
+  "fills": []
+}

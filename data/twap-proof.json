@@ -1,0 +1,36 @@
+{
+  "timestamp": "2025-08-01T06:33:26.669Z",
+  "wallet": "SECURE_WALLET_ADDRESS",
+  "slicesExecuted": 3,
+  "totalUSDCProcessed": "0.6",
+  "balanceChanges": {
+    "usdc": {
+      "before": "6.719525",
+      "after": "6.719525",
+      "change": "0.0"
+    }
+  },
+  "transactions": [
+    {
+      "slice": 0,
+      "hash": "0xb4643a00a7f709cf5b6fc05d650903b1067d15c71e2c51f8ad2cfa8bf21060ec",
+      "amount": "0.2 USDC",
+      "timestamp": "2025-08-01T06:32:10.169Z",
+      "polygonscan": "https://polygonscan.com/tx/0xb4643a00a7f709cf5b6fc05d650903b1067d15c71e2c51f8ad2cfa8bf21060ec"
+    },
+    {
+      "slice": 1,
+      "hash": "0xa165e5e286836250d215b52664ecc0cf89d117602d22131d81b316716ad87acd",
+      "amount": "0.2 USDC",
+      "timestamp": "2025-08-01T06:32:34.593Z",
+      "polygonscan": "https://polygonscan.com/tx/0xa165e5e286836250d215b52664ecc0cf89d117602d22131d81b316716ad87acd"
+    },
+    {
+      "slice": 2,
+      "hash": "0x99e81e54869e634dcf0d5796dea3e98050d8192bf6d4eb669e581c68b385bc70",
+      "amount": "0.2 USDC",
+      "timestamp": "2025-08-01T06:33:04.067Z",
+      "polygonscan": "https://polygonscan.com/tx/0x99e81e54869e634dcf0d5796dea3e98050d8192bf6d4eb669e581c68b385bc70"
+    }
+  ]
+}

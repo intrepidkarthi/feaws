@@ -1,0 +1,99 @@
+{
+  "timestamp": 1754107645691,
+  "success": false,
+  "orderHash": "0x126ba080ad046d7f2f8fd6a5c78796330509a2014de0872423897b206696e548",
+  "signature": "0xbd6693d880b23aeea6d1ff74773f085a9b6fa4d6c527e5ecc6a4d5d0408fb5e96ca7993a80d66588d61c72625f26a4405ee3021b8520867c5f3d82bea22be7151c",
+  "buildResponse": {
+    "typedData": {
+      "primaryType": "Order",
+      "types": {
+        "EIP712Domain": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "type": "string"
+          },
+          {
+            "name": "chainId",
+            "type": "uint256"
+          },
+          {
+            "name": "verifyingContract",
+            "type": "address"
+          }
+        ],
+        "Order": [
+          {
+            "name": "salt",
+            "type": "uint256"
+          },
+          {
+            "name": "maker",
+            "type": "address"
+          },
+          {
+            "name": "receiver",
+            "type": "address"
+          },
+          {
+            "name": "makerAsset",
+            "type": "address"
+          },
+          {
+            "name": "takerAsset",
+            "type": "address"
+          },
+          {
+            "name": "makingAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "takingAmount",
+            "type": "uint256"
+          },
+          {
+            "name": "makerTraits",
+            "type": "uint256"
+          }
+        ]
+      },
+      "domain": {
+        "name": "1inch Aggregation Router",
+        "version": "6",
+        "chainId": 137,
+        "verifyingContract": "0x111111125421ca6dc452d289314280a0f8842a65"
+      },
+      "message": {
+        "maker": "0x5756cb1c9223e109fcd0d0f0b48923b1d8b4c654",
+        "makerAsset": "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
+        "takerAsset": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+        "makerTraits": "35280402189494778293119284494834596924043200573402732703709014869954749530112",
+        "salt": "102412815592901291240835741832103037173285864209259992268984278972592656698310",
+        "makingAmount": "50000",
+        "takingAmount": "250000000000000000",
+        "receiver": "0xc0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e"
+      }
+    },
+    "orderHash": "0x126ba080ad046d7f2f8fd6a5c78796330509a2014de0872423897b206696e548",
+    "extension": "0x000000980000004a0000004a0000004a0000004a000000250000000000000000c0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e00000001f43201555d67e125f8769284bac0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e00000001f43201555d67e125f8769284bac0dfdb9e7a392c3dbbe7c6fbe8fbc1789c9fe05e00000000000000000000000000000000000000000090cbe4bdd538d6e9b379bff5fe72c3d67a521de500000001f43201555d67e125f8769284ba"
+  },
+  "workingSubmission": null,
+  "endpoints": {
+    "build": "https://api.1inch.dev/orderbook/v4.0/137/build",
+    "submit": "https://api.1inch.dev/orderbook/v4.0/137/order",
+    "verify": "https://api.1inch.dev/orderbook/v4.0/137/order/0x126ba080ad046d7f2f8fd6a5c78796330509a2014de0872423897b206696e548"
+  },
+  "urls": {
+    "oneInchApp": "https://app.1inch.io/#/137/limit-order/0x126ba080ad046d7f2f8fd6a5c78796330509a2014de0872423897b206696e548",
+    "polygonscan": "https://polygonscan.com/address/0x111111125421ca6dc452d289314280a0f8842a65"
+  },
+  "parameters": {
+    "makingAmount": "50000",
+    "takingAmount": "250000000000000000",
+    "expiration": 1754111244,
+    "maker": "0x5756CB1C9223E109FCd0D0f0b48923b1D8B4C654"
+  }
+}

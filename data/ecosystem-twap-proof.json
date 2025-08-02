@@ -1,0 +1,59 @@
+{
+  "timestamp": "2025-08-01T13:50:40.982Z",
+  "strategy": "Comprehensive 1inch Ecosystem TWAP",
+  "network": "Polygon Mainnet",
+  "wallet": "0x5756CB1C9223E109FCd0D0f0b48923b1D8B4C654",
+  "ecosystemStatus": {
+    "timestamp": "2025-08-01T13:47:37.354Z",
+    "wallet": "0x5756CB1C9223E109FCd0D0f0b48923b1D8B4C654",
+    "protocols": {
+      "fusion": {
+        "available": false,
+        "activeOrders": 0,
+        "error": "No proxy config found"
+      },
+      "aggregator": {
+        "available": true,
+        "lastQuote": "4981211146617928887"
+      },
+      "limitOrderProtocol": {
+        "available": true,
+        "contractAddress": "0x111111125421ca6dc452d289314280a0f8842a65",
+        "orderCreation": "available",
+        "orderFilling": "in_development"
+      }
+    }
+  },
+  "executionResults": [
+    {
+      "slice": 1,
+      "protocol": "1inch Aggregator",
+      "hash": "0x01c99acd43ad45e5cba6d8098bab8e188f823f96b8af22f58c0f2cdf5d318aaa",
+      "timestamp": "2025-08-01T13:48:27.812Z",
+      "amount": "0.05",
+      "status": "completed"
+    },
+    {
+      "slice": 2,
+      "protocol": "1inch Aggregator",
+      "hash": "0x5e2394851f7929cab0eee99ef09fa904b441854f1794896bfe488c29f15a7af8",
+      "timestamp": "2025-08-01T13:49:55.974Z",
+      "amount": "0.05",
+      "status": "completed"
+    },
+    {
+      "slice": 3,
+      "protocol": "1inch Limit Order Protocol",
+      "orderHash": "0xaf64979eb13c36cb5043e0510f0c1e25ef13048ab7146e87a268ea39813779b6",
+      "timestamp": "2025-08-01T13:50:40.981Z",
+      "amount": "0.05",
+      "status": "created"
+    }
+  ],
+  "protocolsUsed": [
+    "1inch Aggregator",
+    "1inch Limit Order Protocol"
+  ],
+  "totalSlices": 3,
+  "successfulSlices": 2
+}
