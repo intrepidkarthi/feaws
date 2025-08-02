@@ -188,7 +188,7 @@ async function main() {
         });
         
         console.log('');
-        console.log('✅ ETHGLOBAL UNITE 2025 COMPLIANCE:');
+        console.log('✅ PRODUCTION COMPLIANCE:');
         console.log('✅ Real on-chain transactions on Polygon mainnet');
         console.log('✅ 1inch Protocol integration (Aggregator API)');
         console.log('✅ Time-weighted execution with verifiable timing');
@@ -236,7 +236,7 @@ async function main() {
         
         console.log('');
         console.log('💾 Execution proof saved to: data/twap-execution-proof.json');
-        console.log('🎯 Ready for ETHGlobal submission!');
+        console.log('🎯 Ready for production deployment!');
     }
 }
 

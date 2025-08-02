@@ -1,7 +1,7 @@
 {
   "name": "feaws-twap-engine",
   "version": "1.0.0",
-  "description": "Advanced TWAP Engine for 1inch Limit Order Protocol",
+  "description": "Enterprise DeFi Treasury Management Platform with Advanced TWAP Engine",
   "main": "scripts/deploy.js",
   "scripts": {
     "test": "forge test",
@@ -17,9 +17,9 @@
     "twap",
     "limit-orders",
     "polygon",
-    "ethglobal"
+    "treasury-management"
   ],
-  "author": "ETHGlobal UNITE Team",
+  "author": "FEAWS Development Team",
   "license": "MIT",
   "dependencies": {
     "ethers": "^6.13.4",

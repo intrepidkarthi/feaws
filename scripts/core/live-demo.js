@@ -29,9 +29,9 @@ const LOP_CONTRACT = '0x94Bc2a1C732BcAd7343B25af48385Fe76E08734f';
 const TWAP_LOGGER = '0xA7909100B456a03703D16eD06F6B4F25D0a87971';
 
 async function main() {
-    console.log('🚀 FEAWS TWAP Engine - Live Demo\n');
+    console.log('🊀 FEAWS TWAP Engine - Live Platform\n');
     console.log('═'.repeat(60));
-    console.log('🎯 ETHGlobal UNITE 2025 - 1inch Prize Track');
+    console.log('🎯 Enterprise Treasury Management Platform');
     console.log('📋 Advanced TWAP Strategy using 1inch Limit Order Protocol');
     console.log('═'.repeat(60));
 
