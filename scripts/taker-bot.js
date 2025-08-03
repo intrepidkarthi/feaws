@@ -14,12 +14,54 @@ const { ethers } = require('ethers');
 const fs = require('fs');
 const path = require('path');
 
+// Track processed orders to prevent duplicate fills
+const PROCESSED_ORDERS_FILE = path.join(__dirname, '../data/processed-orders.json');
+let processedOrders = new Set();
+
+// Load processed orders from file
+function loadProcessedOrders() {
+    try {
+        if (fs.existsSync(PROCESSED_ORDERS_FILE)) {
+            const data = fs.readFileSync(PROCESSED_ORDERS_FILE, 'utf8');
+            const orders = JSON.parse(data);
+            processedOrders = new Set(orders);
+        }
+    } catch (error) {
+        console.warn('Warning: Could not load processed orders:', error.message);
+    }
+}
+
+// Save processed orders to file
+function saveProcessedOrders() {
+    try {
+        fs.writeFileSync(PROCESSED_ORDERS_FILE, JSON.stringify([...processedOrders], null, 2));
+    } catch (error) {
+        console.warn('Warning: Could not save processed orders:', error.message);
+    }
+}
+
+// Mark an order as processed
+function markOrderAsProcessed(order) {
+    const orderId = `${order.sliceIndex}-${order.availableAt}`;
+    processedOrders.add(orderId);
+    saveProcessedOrders();
+}
+
+// Check if an order has been processed
+function isOrderProcessed(order) {
+    const orderId = `${order.sliceIndex}-${order.availableAt}`;
+    return processedOrders.has(orderId);
+}
+
+// Initialize processed orders
+loadProcessedOrders();
+
 // 1inch LOP contract address on Polygon
-const LOP_CONTRACT = '0x94Bc2a1C732BcAd7343B25af48385Fe76E08734f';
+const LOP_CONTRACT = '0x111111125421ca6dc452d289314280a0f8842a65';
 
 // 1inch LOP ABI (minimal interface for fillOrder)
 const LOP_ABI = [
-    'function fillOrder((uint256,address,address,address,address,uint256,uint256,bytes,bytes,bytes) order, bytes signature, bytes interaction, uint256 makingAmount, uint256 takingAmount, uint256 skipPermitAndThresholdAmount) external payable returns (uint256, uint256, bytes32)',
+    'function fillOrder((uint256,address,address,address,address,address,uint256,uint256,bytes,bytes,bytes,bytes,bytes,bytes,bytes) order, bytes signature, uint256 makingAmount, uint256 takingAmount, uint256 flags) external payable returns (uint256, uint256, bytes32)',
     'event OrderFilled(address indexed maker, bytes32 orderHash, uint256 remaining)'
 ];
 
@@ -78,75 +120,48 @@ async function main() {
 
         if (availableOrders.length > 0) {
             const order = availableOrders[0];
-            console.log(`⚡ Filling slice ${order.sliceIndex} (${order.makingAmount} USDC → ${order.takingAmount} WMATIC)`);
+            
+            // Check if order has already been processed
+            if (isOrderProcessed(order)) {
+                console.log(`⏭️  Skipping already processed slice ${order.sliceIndex}`);
+                continue;
+            }
+            
+            console.log(`⚡ Filling slice ${order.sliceIndex} (${ethers.formatUnits(order.order.makingAmount, 6)} USDC → ${ethers.formatEther(order.order.takingAmount)} WMATIC)`);
 
             try {
                 // Build the order struct for 1inch LOP
                 const lopOrder = [
                     order.order.salt,
-                    order.order.maker,
-                    order.order.receiver,
                     order.order.makerAsset,
                     order.order.takerAsset,
+                    order.order.maker,
+                    order.order.receiver,
+                    order.order.allowedSender,
                     order.order.makingAmount,
                     order.order.takingAmount,
+                    order.order.makerAssetData,
+                    order.order.takerAssetData,
+                    order.order.getMakerAmount,
+                    order.order.getTakerAmount,
                     order.order.predicate,
                     order.order.permit,
                     order.order.interaction
                 ];
 
-                // Generate proper EIP-712 signature for the order
-                const makerWallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-                
-                // 1inch LOP domain
-                const domain = {
-                    name: 'Limit Order Protocol',
-                    version: '4',
-                    chainId: 137,
-                    verifyingContract: '0x94Bc2a1C732BcAd7343B25af48385Fe76E08734f'
-                };
-                
-                // Order type for EIP-712
-                const types = {
-                    Order: [
-                        { name: 'salt', type: 'uint256' },
-                        { name: 'maker', type: 'address' },
-                        { name: 'receiver', type: 'address' },
-                        { name: 'makerAsset', type: 'address' },
-                        { name: 'takerAsset', type: 'address' },
-                        { name: 'makingAmount', type: 'uint256' },
-                        { name: 'takingAmount', type: 'uint256' },
-                        { name: 'predicate', type: 'bytes' },
-                        { name: 'permit', type: 'bytes' },
-                        { name: 'interaction', type: 'bytes' }
-                    ]
-                };
-                
-                // Sign the order
-                const signature = await makerWallet.signTypedData(domain, types, {
-                    salt: order.order.salt,
-                    maker: order.order.maker,
-                    receiver: order.order.receiver,
-                    makerAsset: order.order.makerAsset,
-                    takerAsset: order.order.takerAsset,
-                    makingAmount: order.order.makingAmount,
-                    takingAmount: order.order.takingAmount,
-                    predicate: order.order.predicate,
-                    permit: order.order.permit,
-                    interaction: order.order.interaction
-                });
+                // Use the existing signature from the order file
+                const signature = order.signature;
                 
                 // Call fillOrder on 1inch LOP
                 const tx = await lopContract.fillOrder(
                     lopOrder,
                     signature,
-                    order.order.interaction,
                     order.order.makingAmount,
                     order.order.takingAmount,
-                    0, // skipPermitAndThresholdAmount
+                    0, // flags
                     {
-                        gasLimit: 300000,
-                        gasPrice: ethers.parseUnits('30', 'gwei')
+                        gasLimit: 500000,
+                        gasPrice: ethers.parseUnits('35', 'gwei')
                     }
                 );
 
@@ -159,12 +174,9 @@ async function main() {
                     console.log(`✅ Slice ${order.sliceIndex} filled successfully!`);
                     console.log(`🔍 Polygonscan: https://polygonscan.com/tx/${tx.hash}`);
                     
-                    // Mark as filled
-                    order.filled = true;
-                    order.txHash = tx.hash;
-                    order.gasUsed = receipt.gasUsed.toString();
-                    fillCount++;
-
+                    // Mark order as processed
+                    markOrderAsProcessed(order);
+                    
                     // Log to CSV
                     const csvLine = `${order.sliceIndex},${new Date().toISOString()},${tx.hash},${receipt.gasUsed},success\n`;
                     fs.appendFileSync(fillsFile, csvLine);

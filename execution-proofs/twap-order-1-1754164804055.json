@@ -1,0 +1,30 @@
+{
+  "timestamp": 1754164804055,
+  "type": "twap-order-created",
+  "order": {
+    "sliceIndex": 1,
+    "order": {
+      "salt": "1754164804053",
+      "makerAsset": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "takerAsset": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "maker": "0x5756CB1C9223E109FCd0D0f0b48923b1D8B4C654",
+      "receiver": "0x5756CB1C9223E109FCd0D0f0b48923b1D8B4C654",
+      "allowedSender": "0x0000000000000000000000000000000000000000",
+      "makingAmount": "50000",
+      "takingAmount": "0",
+      "makerAssetData": "0x",
+      "takerAssetData": "0x",
+      "getMakerAmount": "0x",
+      "getTakerAmount": "0x",
+      "predicate": "0x0000000000000000000000000000000000000000",
+      "permit": "0x",
+      "interaction": "0x"
+    },
+    "signature": "0x1be02b2840161c6b904d776eb191e60ee34aa92581d22bc4c546b55aa6028bfa0f845f4d1b33ac1fcd0b70ecedbf40946f70a3b7e27490b429696e7c0141927b1c",
+    "orderHash": "0x5a1546d522807e0e6ae903c7b968e82229ea8e68793dc77a4eade14ad48ec978",
+    "sliceAmount": "50000",
+    "executeTime": 1754164834,
+    "status": "created",
+    "createdAt": 1754164804055
+  }
+}

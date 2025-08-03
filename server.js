@@ -15,6 +15,7 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.json());
+app.use(express.static('.'));
 
 // Initialize blockchain connection
 const provider = new ethers.JsonRpcProvider(process.env.POLYGON_RPC_URL);
@@ -251,6 +252,174 @@ app.get('/api/history', (req, res) => {
     }
 });
 
+// Execute balance fetcher
+app.post('/api/execute/balance', async (req, res) => {
+    try {
+        console.log('💰 Executing Balance Fetcher...');
+        
+        const scriptPath = path.join(__dirname, 'scripts', 'core', 'balance-fetcher.js');
+        const child = spawn('node', [scriptPath], {
+            cwd: __dirname,
+            env: { ...process.env }
+        });
+        
+        let output = '';
+        let error = '';
+        
+        child.stdout.on('data', (data) => {
+            output += data.toString();
+            console.log(data.toString());
+        });
+        
+        child.stderr.on('data', (data) => {
+            error += data.toString();
+            console.error(data.toString());
+        });
+        
+        child.on('close', (code) => {
+            res.json({
+                success: code === 0,
+                message: code === 0 ? 'Balance check completed' : 'Balance check failed',
+                output: output,
+                error: error,
+                timestamp: new Date().toISOString()
+            });
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
+// Execute USDC approval
+app.post('/api/execute/approve', async (req, res) => {
+    try {
+        console.log('✅ Executing USDC Approval...');
+        
+        const scriptPath = path.join(__dirname, 'scripts', 'core', 'approve-usdc.js');
+        const child = spawn('node', [scriptPath], {
+            cwd: __dirname,
+            env: { ...process.env }
+        });
+        
+        let output = '';
+        let error = '';
+        
+        child.stdout.on('data', (data) => {
+            output += data.toString();
+            console.log(data.toString());
+        });
+        
+        child.stderr.on('data', (data) => {
+            error += data.toString();
+            console.error(data.toString());
+        });
+        
+        child.on('close', (code) => {
+            res.json({
+                success: code === 0,
+                message: code === 0 ? 'USDC approval completed' : 'USDC approval failed',
+                output: output,
+                error: error,
+                timestamp: new Date().toISOString()
+            });
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
+// Execute Limit Order Protocol
+app.post('/api/execute/lop', async (req, res) => {
+    try {
+        console.log('🎯 Executing Limit Order Protocol...');
+        
+        const scriptPath = path.join(__dirname, 'scripts', 'core', 'limit-order-protocol.js');
+        const child = spawn('node', [scriptPath], {
+            cwd: __dirname,
+            env: { ...process.env }
+        });
+        
+        let output = '';
+        let error = '';
+        
+        child.stdout.on('data', (data) => {
+            output += data.toString();
+            console.log(data.toString());
+        });
+        
+        child.stderr.on('data', (data) => {
+            error += data.toString();
+            console.error(data.toString());
+        });
+        
+        child.on('close', (code) => {
+            res.json({
+                success: code === 0,
+                message: code === 0 ? 'Limit order created' : 'Limit order failed',
+                output: output,
+                error: error,
+                timestamp: new Date().toISOString()
+            });
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
+// Execute Monitor
+app.post('/api/execute/monitor', async (req, res) => {
+    try {
+        console.log('📊 Starting Transaction Monitor...');
+        
+        const scriptPath = path.join(__dirname, 'scripts', 'core', 'monitor.js');
+        const child = spawn('node', [scriptPath], {
+            cwd: __dirname,
+            env: { ...process.env }
+        });
+        
+        let output = '';
+        let error = '';
+        
+        child.stdout.on('data', (data) => {
+            output += data.toString();
+            console.log(data.toString());
+        });
+        
+        child.stderr.on('data', (data) => {
+            error += data.toString();
+            console.error(data.toString());
+        });
+        
+        child.on('close', (code) => {
+            res.json({
+                success: code === 0,
+                message: code === 0 ? 'Monitor started' : 'Monitor failed',
+                output: output,
+                error: error,
+                timestamp: new Date().toISOString()
+            });
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
 // List available working scripts
 app.get('/api/scripts', (req, res) => {
     try {
@@ -286,8 +455,12 @@ app.listen(PORT, () => {
     console.log('🔗 Available Endpoints:');
     console.log('   GET  /health              - Server health');
     console.log('   GET  /api/balances        - Real wallet balances');
+    console.log('   POST /api/execute/balance - Execute balance fetcher');
+    console.log('   POST /api/execute/approve - Execute USDC approval');
     console.log('   POST /api/execute/twap    - Execute real TWAP');
+    console.log('   POST /api/execute/lop     - Execute limit order protocol');
     console.log('   POST /api/execute/lop-twap - Execute real LOP TWAP');
+    console.log('   POST /api/execute/monitor - Execute transaction monitor');
     console.log('   GET  /api/history         - Execution history');
     console.log('   GET  /api/scripts         - Available scripts');
     console.log('');

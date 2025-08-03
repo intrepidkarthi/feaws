@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FEAWS - Live Treasury Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link rel="stylesheet" href="assets/css/dashboard-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="dashboard-header">
+        <div class="header-left">
+            <a href="landing.html" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+            <div class="logo-container">
+                <img src="assets/images/feaws-logo-header.svg" alt="FEAWS Logo" class="dashboard-logo">
+                <div class="header-text">
+                    <h1 class="dashboard-title">FEAWS</h1>
+                    <span class="dashboard-subtitle">Live Treasury Dashboard</span>
+                    <span class="dashboard-status">🟢 Connected to Polygon Mainnet</span>
+                </div>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="live-indicator">
+                <div class="live-dot"></div>
+                <span>Real-time Execution</span>
+            </div>
+            <div class="wallet-display" id="wallet-display">
+                0x5756...C654
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div class="dashboard-container">
+        <!-- Left Column -->
+        <div class="left-column">
+            <!-- Portfolio Overview -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Portfolio Overview</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                </div>
+                <div class="portfolio-value" id="portfolio-value">$0.00</div>
+                <div class="portfolio-change">
+                    <i class="fas fa-arrow-up"></i>
+                    <span id="portfolio-change">+0.00% (24h)</span>
+                </div>
+                <div class="balance-grid">
+                    <div class="balance-item">
+                        <div class="balance-token">USDC</div>
+                        <div class="balance-amount" id="usdc-balance">0.00</div>
+                    </div>
+                    <div class="balance-item">
+                        <div class="balance-token">WMATIC</div>
+                        <div class="balance-amount" id="wmatic-balance">0.00</div>
+                    </div>
+                    <div class="balance-item">
+                        <div class="balance-token">POL</div>
+                        <div class="balance-amount" id="pol-balance">0.00</div>
+                    </div>
+                    <div class="balance-item">
+                        <div class="balance-token">Total USD</div>
+                        <div class="balance-amount" id="total-usd">$0.00</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategy Execution -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Strategy Execution</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                </div>
+                <div class="strategy-grid">
+                    <button class="strategy-btn" onclick="executeStrategy('twap')" id="twap-btn">
+                        <i class="fas fa-water"></i>
+                        <span>Execute TWAP</span>
+                        <small>Time-weighted execution</small>
+                    </button>
+                    <button class="strategy-btn" onclick="executeStrategy('yield')" id="yield-btn">
+                        <i class="fas fa-fire"></i>
+                        <span>Yield Strategy</span>
+                        <small>Optimize returns</small>
+                    </button>
+                    <button class="strategy-btn" onclick="executeStrategy('arbitrage')" id="arbitrage-btn">
+                        <i class="fas fa-wind"></i>
+                        <span>Arbitrage</span>
+                        <small>Cross-DEX opportunities</small>
+                    </button>
+                    <button class="strategy-btn" onclick="executeStrategy('rebalance')" id="rebalance-btn">
+                        <i class="fas fa-balance-scale"></i>
+                        <span>Rebalance</span>
+                        <small>Portfolio optimization</small>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column">
+            <!-- Risk Management -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Risk Management</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Portfolio Risk Score</span>
+                        <span id="risk-score">Low (35%)</span>
+                    </div>
+                    <div class="risk-meter">
+                        <div class="risk-fill" id="risk-fill"></div>
+                    </div>
+                </div>
+                <div class="risk-metrics">
+                    <div class="risk-metric">
+                        <span>✅ Diversification</span>
+                        <span>Optimal</span>
+                    </div>
+                    <div class="risk-metric">
+                        <span>✅ Liquidity Risk</span>
+                        <span>Low</span>
+                    </div>
+                    <div class="risk-metric">
+                        <span>⚠️ Volatility</span>
+                        <span>Medium</span>
+                    </div>
+                    <div class="risk-metric">
+                        <span>✅ Smart Contract</span>
+                        <span>Verified</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Quick Actions</h3>
+                    <div class="card-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                </div>
+                <div class="quick-actions">
+                    <button class="action-btn" onclick="refreshBalances()">
+                        <i class="fas fa-sync"></i>
+                        Refresh Balances
+                    </button>
+                    <button class="action-btn" onclick="checkRisk()">
+                        <i class="fas fa-search"></i>
+                        Risk Assessment
+                    </button>
+                    <button class="action-btn" onclick="generateReport()">
+                        <i class="fas fa-file-alt"></i>
+                        Generate Report
+                    </button>
+                    <button class="action-btn" onclick="emergencyStop()">
+                        <i class="fas fa-stop"></i>
+                        Emergency Stop
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal Panel - Prominent Position -->
+        <div class="terminal-panel">
+            <div class="terminal-header">
+                <div class="terminal-title">
+                    <i class="fas fa-terminal"></i>
+                    Live Execution Terminal
+                </div>
+                <div class="terminal-controls">
+                    <div class="terminal-btn close" onclick="clearTerminal()" title="Clear Terminal"></div>
+                    <div class="terminal-btn minimize" onclick="minimizeTerminal()" title="Minimize"></div>
+                    <div class="terminal-btn maximize" onclick="scrollTerminal()" title="Scroll to Bottom"></div>
+                </div>
+            </div>
+            <div class="terminal-content" id="terminal-content">
+                <div class="terminal-line">
+                    <span class="terminal-prompt">feaws@treasury:~$</span>
+                    <span class="terminal-output"> Initializing FEAWS Treasury System...</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-success">✅ Connected to Polygon Mainnet (Chain ID: 137)</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-success">✅ Wallet initialized: 0x5756CB1C9223E109FCd0D0f0b48923b1D8B4C654</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-success">✅ 1inch Protocol integration active</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-info">📡 Backend connection: Attempting...</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">Ready for strategy execution. Click any strategy button to begin.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/dashboard-script.js"></script>
+</body>
+</html>

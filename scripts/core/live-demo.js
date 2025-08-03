@@ -25,7 +25,7 @@ const TOKENS = {
     USDC: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
     WMATIC: '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270'
 };
-const LOP_CONTRACT = '0x94Bc2a1C732BcAd7343B25af48385Fe76E08734f';
+const LOP_CONTRACT = '0x111111125421ca6dc452d289314280a0f8842a65';
 const TWAP_LOGGER = '0xA7909100B456a03703D16eD06F6B4F25D0a87971';
 
 async function main() {
@@ -92,7 +92,7 @@ async function main() {
     console.log(`\n🔐 USDC ALLOWANCE:`);
     console.log(`   Maker → 1inch LOP: ${allowanceFormatted} USDC`);
     
-    if (parseFloat(allowanceFormatted) < 2) {
+    if (parseFloat(allowanceFormatted) < 1) {
         console.log(`   ⚠️  Need to approve USDC first!`);
         console.log(`   Run: npm run approve-usdc`);
         return;
@@ -101,7 +101,7 @@ async function main() {
     }
 
     // Load and display orders
-    const ordersFile = path.join(__dirname, '../data/orders.json');
+    const ordersFile = path.join(__dirname, '../../data/orders.json');
     if (!fs.existsSync(ordersFile)) {
         console.log(`\n❌ Orders not found. Run: npm run build-orders`);
         return;

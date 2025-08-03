@@ -1,0 +1,82 @@
+{
+  "timestamp": 1754160125276,
+  "portfolioValue": 1484204331101400300,
+  "positions": [
+    {
+      "token": "WMATIC",
+      "balance": 1.4842043311014004,
+      "usdValue": 1484204331101400300,
+      "percentage": 1
+    }
+  ],
+  "riskScore": 28,
+  "riskLevel": "CRITICAL",
+  "alerts": [
+    {
+      "type": "POSITION_SIZE",
+      "severity": "HIGH",
+      "message": "Large position detected - consider rebalancing",
+      "action": "REBALANCE"
+    },
+    {
+      "type": "CONCENTRATION",
+      "severity": "HIGH",
+      "message": "Portfolio highly concentrated - diversify",
+      "action": "DIVERSIFY"
+    },
+    {
+      "type": "EMERGENCY",
+      "severity": "CRITICAL",
+      "message": "Critical risk level - immediate action required",
+      "action": "EMERGENCY_STOP"
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "DIVERSIFICATION",
+      "priority": "HIGH",
+      "action": "Reduce largest positions and diversify across more assets",
+      "impact": "Reduce concentration risk"
+    }
+  ],
+  "positionSizeRisk": {
+    "score": 7,
+    "largestPosition": 1,
+    "threshold": 0.3,
+    "status": "HIGH",
+    "message": "Largest position (100.0%) exceeds threshold"
+  },
+  "liquidityRisk": {
+    "score": 0,
+    "totalLiquidity": 5000000,
+    "averageLiquidity": 5000000,
+    "status": "LOW",
+    "message": "Average liquidity: $5,000,000"
+  },
+  "marketRisk": {
+    "score": 3,
+    "portfolioVolatility": 0.3,
+    "status": "LOW",
+    "message": "Portfolio volatility: 30.0%"
+  },
+  "concentrationRisk": {
+    "score": 15,
+    "hhi": 1,
+    "diversificationScore": 0,
+    "status": "HIGH",
+    "message": "Portfolio concentration (HHI): 1.000"
+  },
+  "contractRisk": {
+    "score": 3,
+    "contractRisks": [
+      {
+        "token": "WMATIC",
+        "contract": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+        "riskScore": 3,
+        "exposure": 1
+      }
+    ],
+    "status": "LOW",
+    "message": "Weighted contract risk score: 3.00"
+  }
+}

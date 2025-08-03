@@ -1,0 +1,42 @@
+{
+  "timestamp": 1754161477149,
+  "portfolioValue": 3.1402646503868716,
+  "positions": [],
+  "riskScore": 0,
+  "riskLevel": "MINIMAL",
+  "alerts": [],
+  "recommendations": [],
+  "positionSizeRisk": {
+    "score": 0,
+    "largestPosition": null,
+    "threshold": 0.3,
+    "status": "LOW",
+    "message": "Position sizes within acceptable limits"
+  },
+  "liquidityRisk": {
+    "score": 0,
+    "totalLiquidity": 0,
+    "averageLiquidity": 0,
+    "status": "LOW",
+    "message": "Average liquidity: $NaN"
+  },
+  "marketRisk": {
+    "score": 0,
+    "portfolioVolatility": 0,
+    "status": "LOW",
+    "message": "Portfolio volatility: 0.0%"
+  },
+  "concentrationRisk": {
+    "score": 0,
+    "hhi": 0,
+    "diversificationScore": 1,
+    "status": "LOW",
+    "message": "Portfolio concentration (HHI): 0.000"
+  },
+  "contractRisk": {
+    "score": 0,
+    "contractRisks": [],
+    "status": "LOW",
+    "message": "Weighted contract risk score: 0.00"
+  }
+}

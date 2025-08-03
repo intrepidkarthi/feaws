@@ -1,0 +1,43 @@
+{
+  "totalValue": 6.150039152119277,
+  "assets": [
+    {
+      "symbol": "MATIC",
+      "name": "MATIC",
+      "address": "0x0000000000000000000000000000000000000000",
+      "rawBalance": "15937052912091913867",
+      "formattedBalance": "15.937052912091913867",
+      "balance": 15.937052912091914,
+      "usdValue": 3.079160222329877,
+      "percentageOfPortfolio": 50.067327153011895
+    },
+    {
+      "symbol": "WMATIC",
+      "name": "Wrapped MATIC",
+      "address": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+      "rawBalance": "989675872476668683",
+      "formattedBalance": "0.989675872476668683",
+      "balance": 0.9896758724766687,
+      "usdValue": 0.19121292978939938,
+      "percentageOfPortfolio": 3.109133536548434
+    },
+    {
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "address": "0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
+      "rawBalance": "2879666",
+      "formattedBalance": "2.879666",
+      "balance": 2.879666,
+      "usdValue": 2.879666,
+      "percentageOfPortfolio": 46.82353931043966
+    }
+  ],
+  "riskMetrics": {
+    "volatility": 0.4488234551717025,
+    "concentrationRisk": 50.067327153011895,
+    "diversification": 3,
+    "totalExposure": 6.150039152119277,
+    "riskScore": 33.333333333333336
+  },
+  "timestamp": "2025-08-02T19:25:17.611Z"
+}

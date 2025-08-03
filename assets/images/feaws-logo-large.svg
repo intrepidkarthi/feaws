@@ -1,0 +1,11 @@
+<svg width="200" height="200" viewBox="-1.5 -1.5 3 3" xmlns="http://www.w3.org/2000/svg">
+  <title>FEAWS Large Logo</title>
+  <desc>Large version of FEAWS logo for landing page</desc>
+  <g style="mix-blend-mode: screen;">
+    <circle cx="0.50000" cy="0.00000" r="1.0" fill="#FF6B6B" />
+    <circle cx="0.15451" cy="0.47553" r="1.0" fill="#4ECDC4" />
+    <circle cx="-0.40451" cy="0.29389" r="1.0" fill="#F7FFF7" />
+    <circle cx="-0.40451" cy="-0.29389" r="1.0" fill="#457B9D" />
+    <circle cx="0.15451" cy="-0.47553" r="1.0" fill="#8367C7" />
+  </g>
+</svg>

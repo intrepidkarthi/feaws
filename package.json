@@ -8,7 +8,27 @@
     "deploy:polygon": "node scripts/deploy.js",
     "build-orders": "node scripts/build-orders.js",
     "taker-bot": "node scripts/taker-bot.js",
-    "monitor": "node scripts/monitor.js"
+    "monitor": "node scripts/monitor.js",
+    "risk-assessment": "node scripts/core/advanced-risk-management.js",
+    "risk-assessment-v2": "node scripts/core/risk-management-v2.js",
+    "test-risk": "node scripts/core/test-advanced-risk.js",
+    "balances": "node scripts/core/balance-fetcher.js",
+    "check-wmatic": "node scripts/check-wmatic.js",
+    "verify-balance": "node scripts/verify-balance.js",
+    "detailed-check": "node scripts/detailed-token-check.js",
+    "check-all-wmatic": "node scripts/check-all-wmatic.js",
+    "check-wpol": "node scripts/check-wpol.js",
+    "lop-twap": "node scripts/fixed-lop-twap.js",
+    "live-demo": "node -r dotenv/config scripts/core/live-demo.js",
+    "approve-usdc": "node -r dotenv/config scripts/core/approve-usdc.js",
+    "check-allowance": "node -r dotenv/config scripts/check-allowance.js",
+    "decode-predicate": "node scripts/decode-predicate.js",
+    "test-fill-order": "node -r dotenv/config scripts/test-fill-order.js",
+    "test-fill-order-fixed": "node -r dotenv/config scripts/test-fill-order-fixed.js",
+    "test-contract": "node -r dotenv/config scripts/test-contract.js",
+    "test-fill-detailed": "node -r dotenv/config scripts/test-fill-detailed.js",
+    "test-rpc": "node -r dotenv/config scripts/test-rpc.js",
+    "final-demo": "node -r dotenv/config scripts/final-demo.js"
   },
   "keywords": [
     "ethereum",
@@ -22,9 +42,13 @@
   "author": "FEAWS Development Team",
   "license": "MIT",
   "dependencies": {
-    "ethers": "^6.13.4",
+    "@1inch/limit-order-sdk": "^4.9.5-rc.0",
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "axios": "^1.7.7"
+    "ethers": "^6.13.4",
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1"
   },
   "devDependencies": {
     "@types/node": "^20.0.0"
